@@ -33,3 +33,27 @@ class CertificatMedicalAdmin(admin.ModelAdmin):
         # Calculer la répartition AVANT la sauvegarde
         obj.calcul_repartition()
         super().save_model(request, obj, form, change)
+
+
+from django.contrib import admin
+from .models import ActeORL
+
+class ActeORLAdmin(admin.ModelAdmin):
+    list_display = ('libelle', 'montant_total',  'msn_montant', 'acteur_nom', 'acteur_montant', 'created_at')
+    readonly_fields = ('msn_montant', 'acteur_montant', 'created_at')
+    fieldsets = (
+        (None, {
+            'fields': ('libelle', 'montant_total')
+        }),
+        ('Maison de santé', {
+            'fields': ('msn_montant'),
+        }),
+        ('Acteur', {
+            'fields': ('acteur_nom', 'acteur_montant'),
+        }),
+        ('Informations complémentaires', {
+            'fields': ('created_at',),
+        }),
+    )
+
+admin.site.register(ActeORL, ActeORLAdmin)

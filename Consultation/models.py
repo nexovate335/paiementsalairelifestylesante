@@ -1,7 +1,6 @@
 from django.db import models
 from decimal import Decimal
 
-
 # -----------------------------
 # Modèle Consultation
 # -----------------------------
@@ -11,6 +10,13 @@ class Consultation(models.Model):
         ('prenatale', 'Consultation Prénatale'),
         ('pediatrique', 'Consultation Pédiatrique'),
         ('anesthesique', 'Consultation Anesthésique'),
+        ('Circoncision', 'Circoncision'),
+        ('Bartholinite', 'Bartholinite'),
+        ('Catpotomie', 'Catpotomie'),
+        ('Cerclage', 'Cerclage'),
+        ('SHT', 'SHT'),
+        ('SONO', 'SONO'),
+        ('IVG', 'IVG'),
         ('orl', 'Consultation ORL'),
     ]
 
@@ -77,3 +83,29 @@ class CertificatMedical(models.Model):
 
     def __str__(self):
         return f"Certificat - {self.libelle}"
+
+from django.db import models
+from decimal import Decimal, ROUND_HALF_UP
+
+class ActeORL(models.Model):
+    libelle = models.CharField(max_length=255)
+    montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+
+    msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    acteur_nom = models.CharField(max_length=255)
+    acteur_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def calcul_repartition(self):
+        montant = self.montant_total or Decimal('0.00')
+        self.msn_montant = (montant * Decimal('0.40')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        self.acteur_montant = (montant * Decimal('0.60')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+
+    def save(self, *args, **kwargs):
+        self.calcul_repartition()
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"ActeORL - {self.libelle}"
