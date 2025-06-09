@@ -1,9 +1,8 @@
 from django.db import models
 from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 
 # === Paiements simples ===
-from django.db import models
-from decimal import Decimal, ROUND_HALF_UP
 
 class PaiementHospitalisation(models.Model):
     libelle = models.CharField(max_length=255)
@@ -40,7 +39,6 @@ class PaiementHospitalisation(models.Model):
         return ", ".join([f"{a.nom}: {a.montant_recu} FCFA" for a in self.acteurhospitalisation_set.all()])
     repartition_detaillee.short_description = "Répartition Acteurs"
 
-
 class ActeurHospitalisation(models.Model):
     paiement = models.ForeignKey(PaiementHospitalisation, on_delete=models.CASCADE)
     nom = models.CharField(max_length=255)
@@ -72,7 +70,6 @@ class PaiementIVA_IVL(models.Model):
     def __str__(self):
         return f"IVA/IVL - {self.libelle}"
     
-
 
 class PaiementMonitorage(models.Model):
     libelle = models.CharField(max_length=255)

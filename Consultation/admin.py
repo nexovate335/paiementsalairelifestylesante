@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Consultation, CertificatMedical
-
+from .models import ActeORL
 
 @admin.register(Consultation)
 class ConsultationAdmin(admin.ModelAdmin):
@@ -18,7 +18,6 @@ class ConsultationAdmin(admin.ModelAdmin):
         obj.calcul_repartition()
         super().save_model(request, obj, form, change)
 
-
 @admin.register(CertificatMedical)
 class CertificatMedicalAdmin(admin.ModelAdmin):
     list_display = (
@@ -35,9 +34,6 @@ class CertificatMedicalAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-from django.contrib import admin
-from .models import ActeORL
-
 class ActeORLAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'montant_total',  'msn_montant', 'acteur_nom', 'acteur_montant', 'created_at')
     readonly_fields = ('msn_montant', 'acteur_montant', 'created_at')
@@ -46,7 +42,7 @@ class ActeORLAdmin(admin.ModelAdmin):
             'fields': ('libelle', 'montant_total')
         }),
         ('Maison de santé', {
-            'fields': ('msn_montant'),
+            'fields': ('msn_nom', 'msn_montant'),
         }),
         ('Acteur', {
             'fields': ('acteur_nom', 'acteur_montant'),

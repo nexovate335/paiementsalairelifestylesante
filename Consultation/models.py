@@ -57,7 +57,6 @@ class Consultation(models.Model):
     def __str__(self):
         return f"{self.get_type_display()} - {self.libelle}"
 
-
 # -----------------------------
 # Modèle Certificat Médical
 # -----------------------------

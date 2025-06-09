@@ -4,7 +4,6 @@ from decimal import Decimal
 class PaiementEchographie(models.Model):
     libelle = models.CharField(max_length=255)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
-
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     acteur_nom = models.CharField(max_length=255)
     acteur_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)

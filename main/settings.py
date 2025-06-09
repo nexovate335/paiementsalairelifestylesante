@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
 
     #'Pansement',
     #'Pharmacie',
@@ -47,20 +46,9 @@ INSTALLED_APPS = [
     #'Cesarienne',
     #'CureHernie',
     #'Varicocele',
-
     'Consultation',
     'Echographie',
     'Hospitalisation',
-=======
-    'Pansement',
-    'Pharmacie',
-    'Vaccin',
-    'Accouchement',
-    'Cesarienne',
-    'CureHernie',
-    'Varicocele',
-    'ActeORL',
->>>>>>> 01de65a (ajout du modele Acte Orl)
 ]
 
 MIDDLEWARE = [
