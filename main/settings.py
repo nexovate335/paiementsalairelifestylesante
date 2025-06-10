@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'Consultation',
     'Echographie',
     'Hospitalisation',
+    'Laboratoire',
 ]
 
 MIDDLEWARE = [

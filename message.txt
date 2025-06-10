@@ -1,0 +1,1 @@
+Mise … jour des modŠles et des fichiers admin, r‚solution de conflit settings.py 

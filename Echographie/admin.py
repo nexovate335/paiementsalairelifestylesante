@@ -1,23 +1,25 @@
 from django.contrib import admin
-from .models import PaiementEchographie
+from .models import ActeMedical, PaiementMonitorage
 
-@admin.register(PaiementEchographie)
-class PaiementEchographieAdmin(admin.ModelAdmin):
+
+@admin.register(ActeMedical)
+class ActeMedicalAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'montant_total', 'msn_montant',
-        'acteur_nom', 'acteur_montant',
+        'type', 'libelle', 'montant_total',
+        'msn_montant', 'acteur_nom', 'acteur_montant',
         'aide_nom', 'aide_montant', 'created_at'
     )
+    list_filter = ('type', 'created_at')
+    search_fields = ('libelle', 'acteur_nom', 'aide_nom')
+    ordering = ('-created_at',)
 
-    readonly_fields = (
-        'msn_montant', 'acteur_montant', 'aide_montant', 'created_at'
-    )
+    def save_model(self, request, obj, form, change):
+        obj.calcul_repartition()
+        super().save_model(request, obj, form, change)
 
-    fieldsets = (
-        (None, {
-            'fields': ('libelle', 'montant_total', 'acteur_nom', 'aide_nom')
-        }),
-        ('Montants calculés automatiquement', {
-            'fields': ('msn_montant', 'acteur_montant', 'aide_montant', 'created_at')
-        }),
-    )
+
+@admin.register(PaiementMonitorage)
+class PaiementMonitorageAdmin(admin.ModelAdmin):
+    list_display = ('libelle', 'montant_total', 'msn_nom', 'msn_montant', 'acteur_nom', 'acteur_montant', 'created_at')
+    search_fields = ('libelle', 'msn_nom', 'acteur_nom')
+    list_filter = ('created_at',)
