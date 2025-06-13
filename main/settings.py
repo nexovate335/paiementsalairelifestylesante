@@ -42,13 +42,11 @@ INSTALLED_APPS = [
     #'Pansement',
     #'Pharmacie',
     #'Vaccin',
-    #'Accouchement',
-    #'Cesarienne',
-    #'CureHernie',
     #'Varicocele',
     'Consultation',
     'Echographie',
     'Hospitalisation',
+    'BlocOperatoire'
 ]
 
 MIDDLEWARE = [
