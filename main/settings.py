@@ -38,15 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    #'Pansement',
-    #'Pharmacie',
-    #'Vaccin',
-    #'Varicocele',
     'Consultation',
     'Echographie',
     'Hospitalisation',
-    'BlocOperatoire'
+    'Pansement',
+    'Pharmacie',
+    'Vaccin',
+    'BlocOperatoire',
+    'Varicocele',
+    'ActeORL',
+    'Laboratoire',
+    'ChargeObligatoire',
+    'SeparationPourcentage',
+
 ]
 
 MIDDLEWARE = [
