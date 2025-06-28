@@ -41,7 +41,16 @@ INSTALLED_APPS = [
     'Consultation',
     'Echographie',
     'Hospitalisation',
+    'Pansement',
+    'Pharmacie',
+    'Vaccin',
+    'BlocOperatoire',
+    'Varicocele',
+    'ActeORL',
     'Laboratoire',
+    'ChargeObligatoire',
+    'SeparationPourcentage',
+
 ]
 
 MIDDLEWARE = [
