@@ -1,16 +1,31 @@
 from django.db import models
-from django.utils import timezone
+from django.utils import timezone, formats
 from decimal import Decimal
 from django.db.models import Sum
-import calendar
+from datetime import datetime
 
+# ✅ Liste des mois en français pour les choix
+MOIS_CHOICES = [
+    (1, "janvier"), (2, "février"), (3, "mars"), (4, "avril"),
+    (5, "mai"), (6, "juin"), (7, "juillet"), (8, "août"),
+    (9, "septembre"), (10, "octobre"), (11, "novembre"), (12, "décembre")
+]
+
+# ✅ Liste des années (modifiable si besoin)
+ANNEE_CHOICES = [(annee, str(annee)) for annee in range(2020, 2036)]
+
+# -------------------------------
+# 📌 Modèle des charges obligatoires
+# -------------------------------
 class ChargeObligatoire(models.Model):
     libelle = models.CharField(max_length=255)
     depense = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    mois = models.DateField(auto_now_add=True)
+    mois = models.IntegerField(choices=MOIS_CHOICES)
+    annee = models.IntegerField(choices=ANNEE_CHOICES, default=2025)
 
     def mois_formate(self):
-        return self.mois.strftime("%B %Y")
+        dt = datetime(year=self.annee, month=self.mois, day=1)
+        return formats.date_format(dt, "F Y")  # Exemple : juin 2025
 
     def __str__(self):
         return f"{self.libelle} - {self.depense} FCFA"
@@ -19,20 +34,28 @@ class ChargeObligatoire(models.Model):
         verbose_name = "Charge Obligatoire"
         verbose_name_plural = "Charges Obligatoires"
 
-
+# -------------------------------
+# 📌 Modèle des montants disponibles
+# -------------------------------
 class MontantTotal(models.Model):
     montant = models.DecimalField(max_digits=12, decimal_places=2, default=0)
-    date = models.DateField(auto_now_add=True)
+    mois = models.IntegerField(choices=MOIS_CHOICES)
+    annee = models.IntegerField(choices=ANNEE_CHOICES, default=2025)
+
+    def mois_formate(self):
+        dt = datetime(year=self.annee, month=self.mois, day=1)
+        return formats.date_format(dt, "F Y")
 
     def __str__(self):
-        return f"{self.montant} FCFA - {self.date}"
+        return f"{self.montant} FCFA - {self.mois_formate()}"
 
     class Meta:
         verbose_name = "Montant Total"
         verbose_name_plural = "Montants Totaux"
 
-
-# Classe de traitement (calculs)
+# -------------------------------
+# 📌 Classe de traitement
+# -------------------------------
 class TraitementChargeObligatoire:
 
     @staticmethod
@@ -43,8 +66,8 @@ class TraitementChargeObligatoire:
     @staticmethod
     def total_du_mois(mois, annee):
         total = ChargeObligatoire.objects.filter(
-            mois__month=mois,
-            mois__year=annee
+            mois=mois,
+            annee=annee
         ).aggregate(total=Sum('depense'))['total']
         return total or Decimal('0.00')
 
@@ -56,19 +79,16 @@ class TraitementChargeObligatoire:
     @staticmethod
     def mois_actuel_format():
         today = timezone.now()
-        mois_nom = calendar.month_name[today.month].capitalize()
-        return f"{mois_nom} {today.year}"
+        dt = datetime(year=today.year, month=today.month, day=1)
+        return formats.date_format(dt, "F Y")
 
     @staticmethod
     def dernier_montant_total():
-        dernier = MontantTotal.objects.order_by('-date').first()
-        if dernier:
-            return dernier.montant
-        return Decimal('0.00')
+        dernier = MontantTotal.objects.order_by('-annee', '-mois').first()
+        return dernier.montant if dernier else Decimal('0.00')
 
     @classmethod
     def calculer_reste(cls):
         montant_total = cls.dernier_montant_total()
         depense = cls.depense_totale()
-        reste = montant_total - depense
-        return reste
+        return montant_total - depense

@@ -1,36 +1,45 @@
 from django.contrib import admin
-from decimal import Decimal  # ← Importer Decimal pour remplacer les float
+from decimal import Decimal
 from .models import SeparationPourcentage
 from .forms import SeparationPourcentageForm
-from ChargeObligatoire.models import TraitementChargeObligatoire
+from ChargeObligatoire.models import TraitementChargeObligatoire, MontantTotal, ChargeObligatoire
 
 
 @admin.register(SeparationPourcentage)
 class SeparationPourcentageAdmin(admin.ModelAdmin):
     form = SeparationPourcentageForm
-    list_display = ('date_calcul', 'reste_a_payer', 'tresor_gu', 'salaire_dg')
-    readonly_fields = [field.name for field in SeparationPourcentage._meta.fields]
+    list_display = ('date_calcul', 'mois', 'annee', 'reste_a_payer', 'tresor_gu', 'salaire_dg')
 
-    def has_add_permission(self, request):
-        return True
+    # Rendre tous les champs readonly sauf `mois` et `annee`
+    def get_readonly_fields(self, request, obj=None):
+        editable = ['mois', 'annee']
+        return [field.name for field in SeparationPourcentage._meta.fields if field.name not in editable]
 
     def save_model(self, request, obj, form, change):
-        # Récupération du reste à payer (en Decimal)
-        reste = TraitementChargeObligatoire.calculer_reste()
+        # Étape 1 : sauvegarde de base
+        super().save_model(request, obj, form, change)
+
+        if not obj.mois or not obj.annee:
+            return
+
+        montant = MontantTotal.objects.filter(mois=obj.mois, annee=obj.annee).first()
+        montant_total = montant.montant if montant else Decimal('0.00')
+
+        depenses = ChargeObligatoire.objects.filter(mois=obj.mois, annee=obj.annee)
+        total_depense = sum((d.depense for d in depenses), Decimal('0.00'))
+
+        reste = montant_total - total_depense
         obj.reste_a_payer = reste
 
-        # Principaux
         obj.tresor_gu = reste * Decimal('0.25')
         obj.salaire_dg = reste * Decimal('0.10')
 
-        # Investissement
         investissement = reste * Decimal('0.50') / 4
         obj.travaux = investissement
         obj.pharmacie = investissement
         obj.reparation = investissement
         obj.labo = investissement
 
-        # Administration (15% > 40%)
         admin_total = reste * Decimal('0.15') * Decimal('0.40')
         obj.comptable = admin_total * Decimal('0.30')
         obj.chef_personnel = admin_total * Decimal('0.16')
@@ -38,7 +47,6 @@ class SeparationPourcentageAdmin(admin.ModelAdmin):
         obj.surveillant = admin_total * Decimal('0.20')
         obj.informatique = admin_total * Decimal('0.12')
 
-        # Autres services (15% > 60%)
         autre_total = reste * Decimal('0.15') * Decimal('0.60')
         obj.reception_1 = autre_total * Decimal('0.25') / 2
         obj.reception_2 = autre_total * Decimal('0.25') / 2
@@ -50,4 +58,4 @@ class SeparationPourcentageAdmin(admin.ModelAdmin):
         obj.securite_2 = autre_total * Decimal('0.25') / 3
         obj.securite_3 = autre_total * Decimal('0.25') / 3
 
-        super().save_model(request, obj, form, change)
+        obj.save()

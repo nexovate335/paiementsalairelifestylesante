@@ -1,26 +1,21 @@
-"""
-URL configuration for main project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('Acceuil.urls')),
+    path('Bulletin_Adminstration/', include('Bulletin_Adminstration.urls')),  # ← inclusion des urls de l'app
+    path('Bulletin_Blanchisserie/', include('Bulletin_Blanchisserie.urls')),
+    path('Bulletin_Bloc/', include('Bulletin_Bloc.urls')),
+    path('Bulletin_Caissiere/', include('Bulletin_Caissiere.urls')),
+    path('Bulletin_GestionPharmacie/', include('Bulletin_GestionPharmacie.urls')),
+    path('Bulletin_laboratoire/', include('Bulletin_laboratoire.urls')),
+    path('Bulletin_Medecin/', include('Bulletin_Medecin.urls')),
+    path('Bulletin_MedecinConsultant/', include('Bulletin_MedecinConsultant.urls')),
+    path('Bulletin_Menage/', include('Bulletin_Menage.urls')),
+    path('Bulletin_paramedicaux/', include('Bulletin_paramedicaux.urls')),
+    path('Bulletin_Pharmacie/', include('Bulletin_Pharmacie.urls')),
+    path('Bulletin_Securite/', include('Bulletin_Securite.urls')),
+    path('Bulletin_SF/', include('Bulletin_SF.urls')),
+    # ajoute d'autres apps ici
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

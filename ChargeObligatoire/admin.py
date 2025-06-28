@@ -1,14 +1,21 @@
 from django.contrib import admin, messages
 from django.db.models import Sum
 from datetime import date
+from django.utils import formats
+from datetime import datetime
 
 from .models import ChargeObligatoire, MontantTotal, TraitementChargeObligatoire
+
+
+def format_mois_annee(mois, annee):
+    dt = datetime(year=annee, month=mois, day=1)
+    return formats.date_format(dt, "F Y")
 
 
 @admin.register(ChargeObligatoire)
 class ChargeObligatoireAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'depense', 'mois_formate')
-    list_filter = ('mois', 'libelle')
+    list_filter = ('mois', 'annee', 'libelle')
     search_fields = ('libelle',)
     actions = ['afficher_total_mensuel', 'afficher_total_general']
 
@@ -16,7 +23,8 @@ class ChargeObligatoireAdmin(admin.ModelAdmin):
         response = super().changelist_view(request, extra_context=extra_context)
         try:
             total_mensuel = TraitementChargeObligatoire.total_mois_actuel()
-            mois_actuel = TraitementChargeObligatoire.mois_actuel_format()
+            today = date.today()
+            mois_actuel = format_mois_annee(today.month, today.year)
             reste = TraitementChargeObligatoire.calculer_reste()
 
             response.context_data['total_mensuel'] = total_mensuel
@@ -30,9 +38,11 @@ class ChargeObligatoireAdmin(admin.ModelAdmin):
 
     def afficher_total_mensuel(self, request, queryset):
         total = TraitementChargeObligatoire.total_mois_actuel()
+        today = date.today()
+        mois_actuel = format_mois_annee(today.month, today.year)
         messages.info(
             request,
-            f"Total des dépenses pour {TraitementChargeObligatoire.mois_actuel_format()} : {total} FCFA"
+            f"Total des dépenses pour {mois_actuel} : {total} FCFA"
         )
 
     afficher_total_mensuel.short_description = "Afficher total du mois actuel"
@@ -46,13 +56,20 @@ class ChargeObligatoireAdmin(admin.ModelAdmin):
 
 @admin.register(MontantTotal)
 class MontantTotalAdmin(admin.ModelAdmin):
-    list_display = ('montant', 'date')
+    list_display = ('montant', 'mois_formate')
+    list_filter = ('mois', 'annee')
+
+    def mois_formate(self, obj):
+        return format_mois_annee(obj.mois, obj.annee)
+
+    mois_formate.short_description = "Période"
 
     def changelist_view(self, request, extra_context=None):
         response = super().changelist_view(request, extra_context=extra_context)
         try:
             total_mensuel = TraitementChargeObligatoire.total_mois_actuel()
-            mois_actuel = TraitementChargeObligatoire.mois_actuel_format()
+            today = date.today()
+            mois_actuel = format_mois_annee(today.month, today.year)
 
             response.context_data['total_mensuel'] = total_mensuel
             response.context_data['mois_actuel'] = mois_actuel
