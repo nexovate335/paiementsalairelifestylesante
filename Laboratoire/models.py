@@ -1,5 +1,6 @@
 from django.db import models
 from decimal import Decimal
+from datetime import date
 
 class LaboTrios(models.Model):
     libelle = models.CharField(max_length=255)
@@ -47,3 +48,53 @@ class LaboTrios(models.Model):
 
     def __str__(self):
         return f"Labo Trios - {self.libelle}"
+
+
+from django.db import models
+from decimal import Decimal
+from datetime import date
+
+MOIS_CHOICES = [(i, date(1900, i, 1).strftime('%B')) for i in range(1, 13)]
+
+class LaboratoireMaison(models.Model):
+    libelle = models.CharField(max_length=100)
+    montant_total = models.DecimalField(max_digits=12, decimal_places=2)
+
+    # Calcul automatique
+    msn_part = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+    acteurs_part = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+
+    prescripteur_nom = models.CharField(max_length=100)
+    prescripteur_gain = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+
+    technicien_nom = models.CharField(max_length=100)
+    technicien_gain = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+
+    preleveur_nom = models.CharField(max_length=100)
+    preleveur_gain = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+
+    assistante_nom = models.CharField(max_length=100)
+    assistante_gain = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
+
+    mois = models.IntegerField(choices=MOIS_CHOICES, default=date.today().month)
+    annee = models.IntegerField(default=date.today().year)
+
+    def save(self, *args, **kwargs):
+        # Répartition
+        self.msn_part = self.montant_total * Decimal('0.80')
+        self.acteurs_part = self.montant_total * Decimal('0.20')
+
+        self.prescripteur_gain = self.acteurs_part * Decimal('0.30')
+        self.technicien_gain = self.acteurs_part * Decimal('0.45')
+        self.preleveur_gain = self.acteurs_part * Decimal('0.15')
+        self.assistante_gain = self.acteurs_part * Decimal('0.10')
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.libelle} - {self.mois}/{self.annee}"
+
+    class Meta:
+        verbose_name = "Laboratoire Maison"
+        verbose_name_plural = "Laboratoires Maison"
+        ordering = ['-annee', '-mois']

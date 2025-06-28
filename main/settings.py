@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'Laboratoire',
     'ChargeObligatoire',
     'SeparationPourcentage',
-
+    'Salaires',
 ]
 
 MIDDLEWARE = [
