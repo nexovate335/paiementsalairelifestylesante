@@ -27,7 +27,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://www.paiementsalaire.lifestylesante.org'
 ]
 
-INSTALLED_APPS = [
+INSTALLED_APPS = [  
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'Bulletin_Blanchisserie',
     'Bulletin_Bloc',
     'Acceuil',
+
 ]
 
 MIDDLEWARE = [

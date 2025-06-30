@@ -1,94 +1,73 @@
 from django.contrib import admin
 from django.db.models import Sum
-from django.http import HttpResponse
+from decimal import Decimal
 from .models import (
     DocteurSalaire,
+    ParaMedicoSalaire,
     PreleveurSalaire,
     PratiqueurSalaire,
-    ParaMedicoSalaire,
-    PrimeTransport
+    PrimeTransport,
 )
 
-# ✅ Action qui calcule le total des gains regroupé par personne
-def calculer_total_gain_par_personne_action(modeladmin, request, queryset):
-    resultats = (
-        queryset
-        .values('nom_personne')
-        .annotate(total_gain=Sum('gain'))
-    )
+class SalaireBaseAdmin(admin.ModelAdmin):
+    list_display = ('nom_personne', 'fonction', 'designation', 'nombre', 'montant_total', 'pourcentage', 'gain', 'mois', 'annee')
+    list_filter = ('mois', 'annee', 'fonction')
+    search_fields = ('nom_personne', 'designation', 'fonction')
+    ordering = ['-annee', '-mois']
 
-    output = "=== Total des gains par personne (pour la sélection) ===\n\n"
-    total_general = 0
+    # Action personnalisée pour totaliser les gains d'un employé sur une période
+    actions = ['totaliser_gains']
 
-    for item in resultats:
-        nom = item['nom_personne']
-        total_gain = item['total_gain'] or 0
-        total_general += total_gain
-        output += f"👤 {nom} : {total_gain:,} FCFA\n"
+    def totaliser_gains(self, request, queryset):
+        # Récupérer nom_personne, mois, annee depuis la sélection
+        # Pour simplifier, on totalise par personne, mois, année des objets sélectionnés
 
-    output += f"\n=== Total Général : {total_general:,} FCFA ==="
+        from django.http import HttpResponse
+        from collections import defaultdict
 
-    return HttpResponse(f"<pre>{output}</pre>")
+        resultats = defaultdict(lambda: Decimal('0.00'))
 
-calculer_total_gain_par_personne_action.short_description = "✅ Calculer TOTAL des gains par personne (regroupé)"
+        for obj in queryset:
+            cle = (obj.nom_personne, obj.mois, obj.annee)
+            resultats[cle] += obj.gain
 
-# ✅ Ajout sur tous les ModelAdmins
-for ModelAdmin in [DocteurSalaire, PreleveurSalaire, PratiqueurSalaire, ParaMedicoSalaire]:
-    admin.site.add_action(calculer_total_gain_par_personne_action)
+        lignes = ["Nom Personne | Mois | Année | Total Gains (sans prime transport)"]
+        for (nom, mois, annee), total in resultats.items():
+            lignes.append(f"{nom} | {mois} | {annee} | {total:.2f}")
 
-# ✅ Admin DocteurSalaire
+        response_text = "\n".join(lignes)
+        return HttpResponse(response_text, content_type="text/plain")
+
+    totaliser_gains.short_description = "Afficher total des gains sélectionnés (hors prime transport)"
+
+
 @admin.register(DocteurSalaire)
-class DocteurSalaireAdmin(admin.ModelAdmin):
-    list_display = (
-        'nom_personne', 'fonction', 'designation', 'mois', 'annee',
-        'montant', 'nombre', 'montant_total', 'pourcentage', 'gain',
-    )
-    readonly_fields = ('montant_total', 'pourcentage', 'gain')
-    list_filter = ('mois', 'annee', 'nom_personne', 'fonction', 'designation')
-    actions = [calculer_total_gain_par_personne_action]
+class DocteurSalaireAdmin(SalaireBaseAdmin):
+    pass
 
-# ✅ Admin PreleveurSalaire
-@admin.register(PreleveurSalaire)
-class PreleveurSalaireAdmin(admin.ModelAdmin):
-    list_display = (
-        'nom_personne', 'fonction', 'designation', 'mois', 'annee',
-        'montant', 'nombre', 'montant_total', 'pourcentage', 'gain',
-    )
-    readonly_fields = ('montant_total', 'pourcentage', 'gain')
-    list_filter = ('mois', 'annee', 'nom_personne', 'fonction', 'designation')
-    actions = [calculer_total_gain_par_personne_action]
 
-# ✅ Admin PratiqueurSalaire
-@admin.register(PratiqueurSalaire)
-class PratiqueurSalaireAdmin(admin.ModelAdmin):
-    list_display = (
-        'nom_personne', 'fonction', 'designation', 'mois', 'annee',
-        'montant', 'nombre', 'montant_total', 'pourcentage', 'gain',
-    )
-    readonly_fields = ('montant_total', 'pourcentage', 'gain')
-    list_filter = ('mois', 'annee', 'nom_personne', 'fonction', 'designation')
-    actions = [calculer_total_gain_par_personne_action]
-
-# ✅ Admin ParaMedicoSalaire
 @admin.register(ParaMedicoSalaire)
-class ParaMedicoSalaireAdmin(admin.ModelAdmin):
-    list_display = (
-        'nom_personne', 'fonction', 'designation', 'mois', 'annee',
-        'montant', 'nombre', 'montant_total', 'pourcentage', 'gain',
-    )
-    readonly_fields = ('montant_total', 'pourcentage', 'gain')
-    list_filter = ('mois', 'annee', 'nom_personne', 'fonction', 'designation')
-    actions = [calculer_total_gain_par_personne_action]
+class ParaMedicoSalaireAdmin(SalaireBaseAdmin):
+    pass
 
-# ✅ Admin PrimeTransport
+
+@admin.register(PreleveurSalaire)
+class PreleveurSalaireAdmin(SalaireBaseAdmin):
+    pass
+
+
+@admin.register(PratiqueurSalaire)
+class PratiqueurSalaireAdmin(SalaireBaseAdmin):
+    pass
+
+
 @admin.register(PrimeTransport)
 class PrimeTransportAdmin(admin.ModelAdmin):
-    list_display = (
-        'nom_personne', 'fonction', 'mois', 'annee',
-        'nombre_total', 'arrivee_true', 'arrivee_false', 'montant', 'prime_totale',
-    )
-    readonly_fields = ('prime_totale',)
-    list_filter = ('mois', 'annee', 'nom_personne', 'fonction')
+    list_display = ('nom_personne', 'fonction', 'nombre_total', 'arrivee_true', 'arrivee_false', 'montant', 'prime_totale', 'mois', 'annee')
+    list_filter = ('mois', 'annee', 'fonction')
+    search_fields = ('nom_personne', 'fonction')
+    ordering = ['-annee', '-mois']
 
     def prime_totale(self, obj):
         return obj.prime_totale()
+    prime_totale.short_description = 'Prime Totale'
