@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Accouchement, Cesarienne, CureHernie, HVV,ActeMedical,ActeMedicalSimple,ActeMedicalIntermediaire,PaiementIVA_IVL,ActeTechnique
+from .models import ( 
+        Accouchement, Cesarienne, CureHernie, HVV,ActeMedical,
+        ActeMedicalSimple,ActeMedicalIntermediaire,PaiementIVA_IVL,
+        ActeTechnique, Varicocele
+    )
 
 @admin.register(Accouchement)
 class AccouchementAdmin(admin.ModelAdmin):
@@ -137,3 +141,14 @@ class ActeTechniqueAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.calcul_repartition()
         super().save_model(request, obj, form, change)
+
+
+@admin.register(Varicocele)
+class VaricoceleAdmin(admin.ModelAdmin):
+    list_display = (
+        'libelle', 'montantTT', 'maison',
+        'chirurgien', 'chirurgien_part',
+        'aide', 'aide_part',
+        'panseur', 'panseur_part',
+    )
+    readonly_fields = ('maison', 'chirurgien_part', 'aide_part', 'panseur_part')

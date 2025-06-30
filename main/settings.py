@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'Pharmacie',
     'Vaccin',
     'BlocOperatoire',
-    'Varicocele',
     'ActeORL',
     'Laboratoire',
     'ChargeObligatoire',
