@@ -12,7 +12,6 @@ def format_mois_annee(mois, annee):
     return formats.date_format(dt, "F Y")
 
 
-@admin.register(ChargeObligatoire)
 class ChargeObligatoireAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'depense', 'mois_formate')
     list_filter = ('mois', 'annee', 'libelle')
@@ -54,7 +53,6 @@ class ChargeObligatoireAdmin(admin.ModelAdmin):
     afficher_total_general.short_description = "Afficher total général"
 
 
-@admin.register(MontantTotal)
 class MontantTotalAdmin(admin.ModelAdmin):
     list_display = ('montant', 'mois_formate')
     list_filter = ('mois', 'annee')

@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import liste_fiches_paie
+from .views import fiche_detail
 
 urlpatterns = [
-    path('fiches/', liste_fiches_paie, name='liste_fiches_paie'),
+    path('fiches/<int:id>/', fiche_detail, name='fiche_detail'),
 ]

@@ -59,10 +59,30 @@
             page-break-after: always;
             margin-bottom: 50px;
         }
+
+        /* Style du bouton retour */
+        .btn-retour {
+            display: inline-block;
+            margin: 15px 0 25px 0;
+            padding: 8px 15px;
+            background-color: #2a9d8f;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .btn-retour:hover {
+            background-color: #1f7a6a;
+        }
     </style>
 </head>
 <body>
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
+
+<!-- Bouton Retour vers l'admin Blanchisserie -->
+<a href="/admin/Bulletin_Blanchisserie/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
 
 {% for fiche in fiches %}
     <div class="fiche-container">

@@ -41,8 +41,11 @@ class SeparationPourcentage(models.Model):
     reception_2 = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     caisse_1 = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     caisse_2 = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    cyril = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    rosine = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    
+    Menage_1 = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    Menage_2= models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    Menage_3= models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+
     securite_1 = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     securite_2 = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     securite_3 = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)

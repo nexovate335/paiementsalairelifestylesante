@@ -1,125 +1,28 @@
-{% load static %}
+from django.contrib import admin
+from django.utils.html import format_html
+from .models import FicheDePaie
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Fiche de Paie</title>
-    <style>
-        body {
-            font-family: "Courier New", Courier, monospace;
-            font-size: 14px;
-        }
+class FicheDePaieAdmin(admin.ModelAdmin):
+    list_display = (
+        'nom', 'poste', 'grade', 'fonction',
+        'mois', 'annee',
+        'total_avant_retenu', 'total_apres_retenu', 'net_a_payer',
+        'voir_fiche'
+    )
+    readonly_fields = (
+        'total_avant_retenu',
+        'total_apres_retenu',
+        'net_a_payer'
+    )
+    search_fields = ('nom', 'poste', 'grade', 'fonction')
+    list_filter = ('mois', 'annee')
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            border: 3px double black;
-        }
+    def voir_fiche(self, obj):
+        url = f"/Bulletin_Adminstration/fiches/{obj.id}/"
+        return format_html(
+            '<a class="button" style="color: white; background-color: #2a9d8f; padding: 4px 8px; border-radius: 4px;" href="{}" target="_blank">Voir fiche</a>',
+            url
+        )
+    voir_fiche.short_description = "Fiche utilisateur"
 
-        th, td {
-            border: 1.5px solid black;
-            padding: 6px 10px;
-            text-align: left;
-            vertical-align: middle;
-        }
-
-        th {
-            background-color: #e6e6e6;
-            font-weight: bold;
-        }
-
-        h1 {
-            text-align: center;
-            text-decoration: underline;
-        }
-
-        .header-section {
-            margin-bottom: 20px;
-        }
-
-        .header-section p {
-            margin: 2px 0;
-        }
-
-        .section-title {
-            font-weight: bold;
-            border-top: 2px solid black;
-            border-bottom: 2px solid black;
-            padding: 4px;
-            background: #f9f9f9;
-        }
-
-        .small-col {
-            width: 100px;
-            text-align: center;
-        }
-
-        .fiche-container {
-            page-break-after: always;
-            margin-bottom: 50px;
-        }
-    </style>
-</head>
-<body>
-<img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
-
-{% for fiche in fiches %}
-    <div class="fiche-container">
-        <h1>FICHE DE PAIE</h1>
-
-        <div class="header-section">
-            <p><strong>NOM:</strong> {{ fiche.nom }}</p>
-            <p><strong>Poste:</strong> {{ fiche.poste }}</p>
-            <p><strong>Grade:</strong> {{ fiche.grade }}</p>
-            <p><strong>Fonction:</strong> {{ fiche.fonction }}</p>
-            <p><strong>Mois:</strong> {{ fiche.mois }} &nbsp; <strong>Année:</strong> {{ fiche.annee }}</p>
-        </div>
-
-        <div class="section-title">PRESTATIONS</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>NATURE</th>
-                    <th class="small-col">MONTANT</th>
-                    <th>Observation</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Prestations</td><td>{{ fiche.prestations }}</td><td></td></tr>
-                <tr><td>Bonus sur prestations</td><td>{{ fiche.bonus_prestations }}</td><td></td></tr>
-                <tr><td>Prime Hospitalisation</td><td>{{ fiche.prime_hospitalisation }}</td><td></td></tr>
-                <tr><td>Ancienneté</td><td>{{ fiche.anciennete }}</td><td></td></tr>
-                <tr><td>Prime de transport</td><td>{{ fiche.prime_transport }}</td><td></td></tr>
-            </tbody>
-        </table>
-
-        <br>
-        <div class="section-title">RETENUES</div>
-        <table>
-            <tr><td>Avance sur salaire</td><td>{{ fiche.avance_salaire }}</td></tr>
-        </table>
-
-        <br>
-        <div class="section-title">TOTALS</div>
-        <table>
-            <tr>
-                <td><strong>Total avant retenues</strong></td>
-                <td>{{ fiche.total_avant_retenues }}</td>
-            </tr>
-            <tr>
-                <td><strong>Total des retenues</strong></td>
-                <td>{{ fiche.total_retenues }}</td>
-            </tr>
-            <tr>
-                <td><strong>Net à payer</strong></td>
-                <td>{{ fiche.net_a_payer }}</td>
-            </tr>
-        </table>
-    </div>
-{% empty %}
-    <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
-{% endfor %}
-
-</body>
-</html>
+admin.site.register(FicheDePaie, FicheDePaieAdmin)

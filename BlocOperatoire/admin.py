@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Accouchement, Cesarienne, CureHernie, HVV,ActeMedical,ActeMedicalSimple,ActeMedicalIntermediaire,PaiementIVA_IVL,ActeTechnique
 
-@admin.register(Accouchement)
+
 class AccouchementAdmin(admin.ModelAdmin):
     list_display = (
         'libelle', 'montantTT', 'maison',
@@ -18,7 +18,6 @@ class AccouchementAdmin(admin.ModelAdmin):
         'part_pediatre',
     )
 
-@admin.register(Cesarienne)
 class CesarienneAdmin(admin.ModelAdmin):
     list_display = (
         'libelle', 'montantTT', 'maison',
@@ -41,7 +40,7 @@ class CesarienneAdmin(admin.ModelAdmin):
         'part_sage_femme',
     )
 
-@admin.register(CureHernie)
+
 class CureHernieAdmin(admin.ModelAdmin):
     list_display = (
         'libelle', 'montantTT', 'maison',
@@ -57,7 +56,6 @@ class CureHernieAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(HVV)
 class HVVAdmin(admin.ModelAdmin):
     list_display = (
         'libelle', 'montant_total', 'msn_montant',
@@ -72,7 +70,7 @@ class HVVAdmin(admin.ModelAdmin):
     list_filter = ('created_at',)
 
 
-@admin.register(ActeMedical)
+
 class ActeMedicalAdmin(admin.ModelAdmin):
     list_display = (
         'type_acte', 'libelle', 'montant_total', 'msn_montant',
@@ -87,7 +85,7 @@ class ActeMedicalAdmin(admin.ModelAdmin):
     list_filter = ('type_acte', 'created_at')
 
 
-@admin.register(ActeMedicalSimple)
+
 class ActeMedicalSimpleAdmin(admin.ModelAdmin):
     list_display = (
         'type_acte', 'libelle', 'montant_total', 'msn_montant',
@@ -101,7 +99,7 @@ class ActeMedicalSimpleAdmin(admin.ModelAdmin):
     list_filter = ('type_acte', 'created_at')
 
 
-@admin.register(ActeMedicalIntermediaire)
+
 class ActeMedicalIntermediaireAdmin(admin.ModelAdmin):
     list_display = (
         'type_acte', 'libelle', 'montant_total', 'msn_montant',
@@ -116,14 +114,12 @@ class ActeMedicalIntermediaireAdmin(admin.ModelAdmin):
     list_filter = ('type_acte', 'created_at')
 
 
-@admin.register(PaiementIVA_IVL)
 class PaiementIVA_IVLAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'montant_total', 'msn_montant', 'acteur_nom', 'acteur_montant', 'aide_nom', 'aide_montant', 'created_at')
     search_fields = ('libelle', 'acteur_nom', 'aide_nom')
     list_filter = ('created_at',)
 
 
-@admin.register(ActeTechnique)
 class ActeTechniqueAdmin(admin.ModelAdmin):
     list_display = (
         'libelle', 'type', 'montant_total',

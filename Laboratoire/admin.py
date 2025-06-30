@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import LaboTrios, LaboratoireMaison
 
-@admin.register(LaboTrios)
 class LaboTriosAdmin(admin.ModelAdmin):
     list_display = (
         'libelle', 'tarif_maison', 'tarif_trios', 'benefice_maison',
@@ -18,7 +17,6 @@ class LaboTriosAdmin(admin.ModelAdmin):
 from django.contrib import admin
 from .models import LaboratoireMaison
 
-@admin.register(LaboratoireMaison)
 class LaboratoireMaisonAdmin(admin.ModelAdmin):
     list_display = (
         'libelle',

@@ -59,6 +59,21 @@
             page-break-after: always;
             margin-bottom: 50px;
         }
+
+        .retour-btn {
+            display: block;
+            width: fit-content;
+            margin: 30px auto;
+            padding: 10px 16px;
+            background-color: #2a9d8f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .retour-btn:hover {
+            background-color: #21867a;
+        }
     </style>
 </head>
 <body>
@@ -133,6 +148,9 @@
 {% empty %}
     <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
+
+<!-- Bouton retour -->
+<a href="/admin/Bulletin_laboratoire/fichedepaie/" class="retour-btn">⬅ Retour à l'administration</a>
 
 </body>
 </html>

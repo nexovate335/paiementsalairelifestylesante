@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import ActeMedical, PaiementMonitorage
 
-
-@admin.register(ActeMedical)
 class ActeMedicalAdmin(admin.ModelAdmin):
     list_display = (
         'type', 'libelle', 'montant_total',

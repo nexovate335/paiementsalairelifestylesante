@@ -5,7 +5,6 @@ class ActeurHospitalisationInline(admin.TabularInline):
     model = ActeurHospitalisation
     extra = 1
 
-@admin.register(PaiementHospitalisation)
 class PaiementHospitalisationAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'montant_total', 'msn_montant', 'repartition_detaillee', 'created_at')
     inlines = [ActeurHospitalisationInline]

@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import ActeORL
 
-@admin.register(ActeORL)
 class ActeORLAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'montant_tt', 'montant_msn', 'montant_acteur')
     search_fields = ('libelle',)

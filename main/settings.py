@@ -28,6 +28,7 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 INSTALLED_APPS = [
+    'djangocms_admin_style',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,6 +64,7 @@ INSTALLED_APPS = [
     'Bulletin_Blanchisserie',
     'Bulletin_Bloc',
     'Acceuil',
+    'core',
 ]
 
 MIDDLEWARE = [

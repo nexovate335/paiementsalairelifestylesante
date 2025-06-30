@@ -1,9 +1,13 @@
 from django.contrib import admin
+from django.utils.html import format_html  # ← Import manquant
 from .models import FichePrestation
 
-@admin.register(FichePrestation)
 class FichePrestationAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'mois', 'annee', 'total_avant_retenu', 'total_apres_retenu', 'net_a_payer')
+    list_display = (
+        'nom', 'mois', 'annee',
+        'total_avant_retenu', 'total_apres_retenu',
+        'net_a_payer', 'voir_fiche'  # ← ajout ici
+    )
     search_fields = ('nom',)
     list_filter = ('mois', 'annee')
     readonly_fields = ('total_avant_retenu', 'total_apres_retenu', 'net_a_payer')
@@ -40,3 +44,13 @@ class FichePrestationAdmin(admin.ModelAdmin):
             )
         }),
     )
+
+    def voir_fiche(self, obj):
+        url = f"/Bulletin_Medecin/fiches/{obj.id}/"  # Corrigé ici
+        return format_html(
+            '<a class="button" style="color: white; background-color: #2a9d8f; padding: 4px 8px; border-radius: 4px;" href="{}" target="_blank">Voir fiche</a>',
+            url
+        )
+    voir_fiche.short_description = "Fiche utilisateur"
+
+admin.site.register(FichePrestation, FichePrestationAdmin)

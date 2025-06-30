@@ -59,9 +59,28 @@
             page-break-after: always;
             margin-bottom: 50px;
         }
+
+        /* Style bouton retour */
+        .btn-retour {
+            display: inline-block;
+            margin: 15px;
+            padding: 8px 15px;
+            background-color: #2a9d8f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn-retour:hover {
+            background-color: #21867a;
+        }
     </style>
 </head>
 <body>
+
+<!-- Bouton retour -->
+<a href="/admin/Bulletin_Pharmacie/" class="btn-retour">← Retour</a>
+
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
 {% for fiche in fiches %}

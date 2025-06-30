@@ -59,6 +59,28 @@
             page-break-after: always;
             margin-bottom: 50px;
         }
+
+        /* Style pour le bouton retour */
+        .btn-retour {
+            display: inline-block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #2a9d8f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .btn-retour:hover {
+            background-color: #21867a;
+        }
+
+        .retour-container {
+            text-align: center;
+            margin-bottom: 50px;
+        }
     </style>
 </head>
 <body>
@@ -120,6 +142,10 @@
 {% empty %}
     <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
+
+<div class="retour-container">
+    <a href="/admin/Bulletin_MedecinConsultant/fichedepaie" class="btn-retour">Retour</a>
+</div>
 
 </body>
 </html>

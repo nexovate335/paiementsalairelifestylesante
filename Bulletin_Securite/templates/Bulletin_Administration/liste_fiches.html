@@ -59,9 +59,26 @@
             page-break-after: always;
             margin-bottom: 50px;
         }
+
+        .retour-btn {
+            display: inline-block;
+            margin: 20px;
+            padding: 8px 14px;
+            background-color: #2a9d8f;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .retour-btn:hover {
+            background-color: #21867a;
+        }
     </style>
 </head>
 <body>
+
+<a href="/admin/Bulletin_Securite/fichedepaie/" class="retour-btn">← Retour</a>
+
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
 {% for fiche in fiches %}
