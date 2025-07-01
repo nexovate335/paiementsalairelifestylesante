@@ -54,12 +54,12 @@ from Bulletin_SF.models import PrestationMensuelle as PM
 from BlocOperatoire.admin import (
     AccouchementAdmin, CesarienneAdmin, CureHernieAdmin, HVVAdmin,
     ActeMedicalAdmin, ActeMedicalSimpleAdmin, ActeMedicalIntermediaireAdmin,
-    PaiementIVA_IVLAdmin, ActeTechniqueAdmin
+    PaiementIVA_IVLAdmin, ActeTechniqueAdmin,VaricoceleAdmin
 )
 from BlocOperatoire.models import (
     Accouchement, Cesarienne, CureHernie, HVV,
     ActeMedical, ActeMedicalSimple, ActeMedicalIntermediaire,
-    PaiementIVA_IVL, ActeTechnique
+    PaiementIVA_IVL, ActeTechnique,Varicocele
 )
 
 # Laboratoire
@@ -109,10 +109,6 @@ from SeparationPourcentage.models import SeparationPourcentage
 from Vaccin.admin import VaccinAdmin
 from Vaccin.models import Vaccin
 
-#Varicocele
-from Varicocele.admin import VaricoceleAdmin
-from Varicocele.models import Varicocele
-
 # === ENREGISTREMENTS ===
 
 for model, admin_class in [
@@ -143,6 +139,7 @@ for model, admin_class in [
     (ActeMedicalIntermediaire, ActeMedicalIntermediaireAdmin),
     (PaiementIVA_IVL, PaiementIVA_IVLAdmin),
     (ActeTechnique, ActeTechniqueAdmin),
+    (Varicocele,VaricoceleAdmin),
 
     # Laboratoire
     (LaboTrios, LaboTriosAdmin),
