@@ -3,7 +3,6 @@ from .models import ActeORL
 
 class ActeORLAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'montant_tt', 'montant_msn', 'montant_acteur')
-    search_fields = ('libelle',)
     list_filter = ('libelle',)
     readonly_fields = ('montant_msn', 'montant_acteur')  # Pour éviter la modification manuelle
 

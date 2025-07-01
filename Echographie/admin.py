@@ -8,7 +8,6 @@ class ActeMedicalAdmin(admin.ModelAdmin):
         'aide_nom', 'aide_montant', 'created_at'
     )
     list_filter = ('type', 'created_at')
-    search_fields = ('libelle', 'acteur_nom', 'aide_nom')
     ordering = ('-created_at',)
 
     def save_model(self, request, obj, form, change):

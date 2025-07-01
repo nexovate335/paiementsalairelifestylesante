@@ -8,7 +8,6 @@ class FicheDePaieAdmin(admin.ModelAdmin):
         'total_avant_retenues', 'total_retenues', 'net_a_payer',
         'voir_fiche'  # ajouter ici la méthode
     )
-    search_fields = ('nom',)
     list_filter = ('mois', 'annee')
     readonly_fields = ('total_avant_retenues', 'total_retenues', 'net_a_payer')
 

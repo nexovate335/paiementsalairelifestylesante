@@ -5,7 +5,6 @@ from .models import FicheDePaie
 @admin.register(FicheDePaie)
 class FicheDePaieAdmin(admin.ModelAdmin):
     list_display = ('nom', 'poste', 'mois', 'annee', 'affiche_net_a_payer', 'voir_fiche')
-    search_fields = ('nom', 'poste', 'mois', 'annee')
     list_filter = ('mois', 'annee', 'poste')
 
     readonly_fields = (

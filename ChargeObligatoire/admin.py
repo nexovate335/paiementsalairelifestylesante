@@ -15,7 +15,6 @@ def format_mois_annee(mois, annee):
 class ChargeObligatoireAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'depense', 'mois_formate')
     list_filter = ('mois', 'annee', 'libelle')
-    search_fields = ('libelle',)
     actions = ['afficher_total_mensuel', 'afficher_total_general']
 
     def changelist_view(self, request, extra_context=None):

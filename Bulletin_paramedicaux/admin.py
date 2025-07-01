@@ -9,7 +9,6 @@ class PrestationMensuelleAdmin(admin.ModelAdmin):
         'voir_fiche'  # Ajout du bouton dans la liste des colonnes
     )
     search_fields = ('nom',)
-    list_filter = ('mois', 'annee')
     readonly_fields = ('total_avant_retenu', 'total_apres_retenu', 'net_a_payer')
 
     fieldsets = (

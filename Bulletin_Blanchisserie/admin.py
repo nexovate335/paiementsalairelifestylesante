@@ -15,7 +15,6 @@ class FicheDePaieAdmin(admin.ModelAdmin):
         'total_retenues',
         'net_a_payer'
     )
-    search_fields = ('nom', 'poste', 'grade', 'fonction')
     list_filter = ('mois', 'annee')
 
     def voir_fiche(self, obj):

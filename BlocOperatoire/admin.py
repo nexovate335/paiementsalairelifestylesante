@@ -66,7 +66,6 @@ class HVVAdmin(admin.ModelAdmin):
         'panseur_nom', 'panseur_montant',
         'created_at',
     )
-    search_fields = ('libelle', 'chirurgien_nom', 'anesthesiste_nom', 'aide_nom')
     list_filter = ('created_at',)
 
 
@@ -81,7 +80,6 @@ class ActeMedicalAdmin(admin.ModelAdmin):
         'panseur_nom', 'panseur_montant',
         'created_at',
     )
-    search_fields = ('libelle', 'chirurgien_nom', 'anesthesiste_nom')
     list_filter = ('type_acte', 'created_at')
 
 
@@ -95,7 +93,6 @@ class ActeMedicalSimpleAdmin(admin.ModelAdmin):
         'created_at',
         'repartition_detaillee',
     )
-    search_fields = ('libelle', 'chirurgien_nom', 'aide_nom')
     list_filter = ('type_acte', 'created_at')
 
 
@@ -110,13 +107,11 @@ class ActeMedicalIntermediaireAdmin(admin.ModelAdmin):
         'created_at',
         'repartition_detaillee',
     )
-    search_fields = ('libelle', 'chirurgien_nom', 'instrumentiste_nom', 'aide_nom')
     list_filter = ('type_acte', 'created_at')
 
 
 class PaiementIVA_IVLAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'montant_total', 'msn_montant', 'acteur_nom', 'acteur_montant', 'aide_nom', 'aide_montant', 'created_at')
-    search_fields = ('libelle', 'acteur_nom', 'aide_nom')
     list_filter = ('created_at',)
 
 
@@ -127,7 +122,6 @@ class ActeTechniqueAdmin(admin.ModelAdmin):
         'aide_nom', 'aide_montant', 'created_at',
     )
     list_filter = ('type', 'created_at')
-    search_fields = ('libelle', 'acteur_nom', 'aide_nom')
     ordering = ('-created_at',)
 
     def save_model(self, request, obj, form, change):

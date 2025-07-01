@@ -8,7 +8,6 @@ class FichePrestationAdmin(admin.ModelAdmin):
         'total_avant_retenu', 'total_apres_retenu',
         'net_a_payer', 'voir_fiche'  # ← ajout ici
     )
-    search_fields = ('nom',)
     list_filter = ('mois', 'annee')
     readonly_fields = ('total_avant_retenu', 'total_apres_retenu', 'net_a_payer')
 
