@@ -2,7 +2,7 @@ from django.urls import path, include
 from core.admin import admin_site  # ← importe ton admin personnalisé
 
 urlpatterns = [
-    path('conixpaie/', admin_site.urls),  # ← utilise ton admin stylisé
+    path('admin/', admin_site.urls),  # ← utilise ton admin stylisé
     path('', include('Acceuil.urls')),
     path('Bulletin_Adminstration/', include('Bulletin_Adminstration.urls')),
     path('Bulletin_Blanchisserie/', include('Bulletin_Blanchisserie.urls')),
