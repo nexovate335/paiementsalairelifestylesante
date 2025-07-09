@@ -24,9 +24,7 @@ class FicheDePaieAdmin(admin.ModelAdmin):
             'fields': (
                 'pourcentage_prestations',
                 'bonus_prestations',
-                'transport_reunion',
                 'prime_informatique',
-                'prime_responsabilite',
                 'prime_transport',
                 'anciennete',
             )

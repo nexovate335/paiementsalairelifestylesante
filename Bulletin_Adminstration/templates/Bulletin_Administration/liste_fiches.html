@@ -82,7 +82,7 @@
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
 <!-- Bouton Retour vers admin -->
-<a href="/admin/Bulletin_Blanchisserie/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
+<a href="/admin/Bulletin_Adminstration/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
 
 {% for fiche in fiches %}
     <div class="fiche-container">
@@ -117,18 +117,8 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td>Transport pour réunion</td>
-                    <td>{{ fiche.transport_reunion }}</td>
-                    <td></td>
-                </tr>
-                <tr>
                     <td>Prime sur informatique</td>
                     <td>{{ fiche.prime_informatique }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Prime de Responsabilité</td>
-                    <td>{{ fiche.prime_responsabilite }}</td>
                     <td></td>
                 </tr>
                 <tr>

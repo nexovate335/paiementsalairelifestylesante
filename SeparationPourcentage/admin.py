@@ -52,9 +52,9 @@ class SeparationPourcentageAdmin(admin.ModelAdmin):
         obj.reception_2 = autre_total * Decimal('0.25') / 2
         obj.caisse_1 = autre_total * Decimal('0.25') / 2
         obj.caisse_2 = autre_total * Decimal('0.25') / 2
-        obj.Menage_1 = autre_total * Decimal('0.25') / 3
-        obj.Menage_2 = autre_total * Decimal('0.25') / 3
-        obj.Menage_3 = autre_total * Decimal('0.25') / 3
+        obj.Menage_1 = autre_total * Decimal('0.12') / 3
+        obj.Menage_2 = autre_total * Decimal('0.8') / 3
+        obj.Menage_3 = autre_total * Decimal('0.6') / 3
         obj.securite_1 = autre_total * Decimal('0.25') / 3
         obj.securite_2 = autre_total * Decimal('0.25') / 3
         obj.securite_3 = autre_total * Decimal('0.25') / 3
