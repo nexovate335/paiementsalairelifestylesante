@@ -128,10 +128,6 @@ class ActeTechniqueAdmin(admin.ModelAdmin):
     list_filter = ('type', 'created_at')
     ordering = ('-created_at',)
 
-    def save_model(self, request, obj, form, change):
-        obj.calcul_repartition()
-        super().save_model(request, obj, form, change)
-
 
 @admin.register(Varicocele)
 class VaricoceleAdmin(admin.ModelAdmin):
