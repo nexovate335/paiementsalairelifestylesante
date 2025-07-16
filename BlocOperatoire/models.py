@@ -339,6 +339,9 @@ class PaiementIVA_IVL(models.Model):
     
     # Classe Acte Médical (non consultation)
 # -----------------------------
+from django.db import models
+from decimal import Decimal
+
 class ActeTechnique(models.Model):
     TYPE_CHOICES = [
         ('Circoncision', 'Circoncision'),
@@ -364,10 +367,12 @@ class ActeTechnique(models.Model):
 
     def __str__(self):
         return f"{self.get_type_display()} - {self.libelle}"
-    
 
-from django.db import models
-from decimal import Decimal
+    def calcul_repartition(self):
+        self.msn_montant = self.montant_total * Decimal('0.70')
+        self.acteur_montant = self.montant_total * Decimal('0.25')
+        self.aide_montant = self.montant_total * Decimal('0.05')
+
 
 class Varicocele(models.Model):
     libelle = models.CharField(max_length=255)
