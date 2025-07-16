@@ -346,11 +346,23 @@ class ActeTechnique(models.Model):
     TYPE_CHOICES = [
         ('Circoncision', 'Circoncision'),
         ('Bartholinite', 'Bartholinite'),
-        ('Catpotomie', 'Catpotomie'),
+        ('Colpotomie', 'Colpotomie'),
         ('Cerclage', 'Cerclage'),
         ('SHT', 'SHT'),
         ('SONO', 'SONO'),
         ('IVG', 'IVG'),
+        ('Biopsie', 'Biopsie'),
+        ('Hémoragie', 'Hémoragie'),
+        ('Episio', 'Episio'),
+        ('Ventouse', 'Ventouse'),
+        ('Implant', 'Implant'),
+        ('Déchirure', 'Déchirure'),
+        ('Expulsion', 'Expulsion'),
+        
+        
+        
+        
+        
     ]
 
     libelle = models.CharField(max_length=255)
