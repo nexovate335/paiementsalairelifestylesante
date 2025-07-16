@@ -60,26 +60,53 @@
             margin-bottom: 50px;
         }
 
-        .retour-btn {
+        /* Style bouton retour */
+        .btn-retour {
             display: inline-block;
-            margin: 20px;
-            padding: 8px 14px;
+            margin: 15px;
+            padding: 8px 15px;
             background-color: #2a9d8f;
             color: white;
             text-decoration: none;
             border-radius: 5px;
+            font-weight: bold;
         }
-
-        .retour-btn:hover {
+        .btn-retour:hover {
             background-color: #21867a;
         }
+
+
+            .btn-print {
+        display: inline-block;
+        margin: 15px 10px;
+        padding: 8px 15px;
+        background-color: #264653;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        cursor: pointer;
+    }
+
+    .btn-print:hover {
+        background-color: #1b2e3b;
+    }
+
+    @media print {
+        .btn-print, .btn-retour {
+            display: none;
+        }
+    }
+
     </style>
 </head>
 <body>
-
-<a href="/admin/Bulletin_Securite/fichedepaie/" class="retour-btn">← Retour</a>
-
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
+<!-- Bouton retour -->
+<a href="/conixpaie/Bulletin_laboratoire/fichedepaie/" class="btn-retour">⬅ Retour à l'administration</a>
+<!-- Bouton Imprimer -->
+<button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
 
 {% for fiche in fiches %}
     <div class="fiche-container">
@@ -99,35 +126,58 @@
                 <tr>
                     <th>NATURE</th>
                     <th class="small-col">MONTANT</th>
-                    <th>Observation</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Prestations générales</td><td>{{ fiche.prestations }}</td><td></td></tr>
-                <tr><td>Transport (jour)</td><td>{{ fiche.transport_jour }}</td><td></td></tr>
-                <tr><td>Transport (nuit, fériés)</td><td>{{ fiche.transport_nuit_feries }}</td><td></td></tr>
-                <tr><td>Autres prestations</td><td>{{ fiche.autres_prestations }}</td><td></td></tr>
-                <tr><td>Prime d'ancienneté</td><td>{{ fiche.prime_anciennete }}</td><td></td></tr>
+                <tr>
+                    <td>Pourcentage sur Prestations</td>
+                    <td>{{ fiche.pourcentage_prestations }}</td>
+                </tr>
+                <tr>
+                    <td>Prélèvements</td>
+                    <td>{{ fiche.prelevements }}</td>
+                </tr>
+                <tr>
+                    <td>Autres Prestations</td>
+                    <td>{{ fiche.autres_prestations }}</td>
+                </tr>
+                <tr>
+                    <td>Prime de Transport</td>
+                    <td>{{ fiche.prime_transport }}</td>
+                </tr>
             </tbody>
         </table>
 
         <br>
         <div class="section-title">RETENUES</div>
         <table>
-            <tr><td>Avance sur salaire</td><td>{{ fiche.avance_salaire }}</td></tr>
+            <tr>
+                <td>Avance sur salaire</td>
+                <td>{{ fiche.avance_salaire }}</td>
+            </tr>
         </table>
 
         <br>
         <div class="section-title">TOTALS</div>
         <table>
-            <tr><td><strong>Total avant retenues</strong></td><td>{{ fiche.total_avant_retenues }}</td></tr>
-            <tr><td><strong>Total des retenues</strong></td><td>{{ fiche.total_retenues }}</td></tr>
-            <tr><td><strong>Net à payer</strong></td><td>{{ fiche.net_a_payer }}</td></tr>
+            <tr>
+                <td><strong>Total avant retenues</strong></td>
+                <td>{{ fiche.total_avant_retenues }}</td>
+            </tr>
+            <tr>
+                <td><strong>Total des retenues</strong></td>
+                <td>{{ fiche.total_retenues }}</td>
+            </tr>
+            <tr>
+                <td><strong>Net à payer</strong></td>
+                <td>{{ fiche.net_a_payer }}</td>
+            </tr>
         </table>
     </div>
 {% empty %}
     <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
+
 
 </body>
 </html>

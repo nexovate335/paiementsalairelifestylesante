@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Fiche de Prestation Mensuelle</title>
+    <title>Fiche de Paie</title>
     <style>
         body {
             font-family: "Courier New", Courier, monospace;
@@ -60,27 +60,59 @@
             margin-bottom: 50px;
         }
 
-        .retour-btn {
+        /* Style bouton retour */
+        .btn-retour {
             display: inline-block;
-            margin: 20px;
-            padding: 6px 12px;
+            margin: 15px;
+            padding: 8px 15px;
             background-color: #2a9d8f;
             color: white;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 5px;
             font-weight: bold;
         }
+        .btn-retour:hover {
+            background-color: #21867a;
+        }
+
+        .btn-print {
+    display: inline-block;
+    margin: 15px 10px;
+    padding: 8px 15px;
+    background-color: #264653;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+}
+
+.btn-print:hover {
+    background-color: #1b2e3b;
+}
+
+@media print {
+    .btn-print, .btn-retour {
+        display: none;
+    }
+}
+
     </style>
 </head>
 <body>
 
-<a href="/admin/Bulletin_paramedicaux/prestationmensuelle/" class="retour-btn">← Retour à l'administration</a>
+<!-- Bouton retour -->
+<a href="/conixpaie/Bulletin_Pharmacie/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
+<!-- Bouton Imprimer -->
+<button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
+
 
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
 {% for fiche in fiches %}
     <div class="fiche-container">
-        <h1>FICHE DE PRESTATION MENSUELLE</h1>
+        <h1>FICHE DE PAIE</h1>
 
         <div class="header-section">
             <p><strong>NOM:</strong> {{ fiche.nom }}</p>
@@ -90,7 +122,7 @@
             <p><strong>Mois:</strong> {{ fiche.mois }} &nbsp; <strong>Année:</strong> {{ fiche.annee }}</p>
         </div>
 
-        <div class="section-title">DÉTAIL DES PRESTATIONS</div>
+        <div class="section-title">PRESTATIONS</div>
         <table>
             <thead>
                 <tr>
@@ -100,18 +132,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Consultations urgences</td><td>{{ fiche.consultations_urgences }}</td><td></td></tr>
-                <tr><td>Pharmacie bonus</td><td>{{ fiche.pharmacie_bonus }}</td><td></td></tr>
-                <tr><td>Prescriptions</td><td>{{ fiche.prescriptions }}</td><td></td></tr>
-                <tr><td>Pansements</td><td>{{ fiche.pensements }}</td><td></td></tr>
-                <tr><td>Pharmacie nuit/weekend</td><td>{{ fiche.pharmacie_nuit_weekend }}</td><td></td></tr>
-                <tr><td>Laboratoire nuit/weekend</td><td>{{ fiche.laboratoire_nuit_weekend }}</td><td></td></tr>
-                <tr><td>Aides aux actes</td><td>{{ fiche.aides_aux_actes }}</td><td></td></tr>
-                <tr><td>Prescriptions laboratoire</td><td>{{ fiche.prescriptions_laboratoire }}</td><td></td></tr>
-                <tr><td>Prime de caisse</td><td>{{ fiche.prime_caisse }}</td><td></td></tr>
-                <tr><td>Prescription échographie</td><td>{{ fiche.prescription_echo }}</td><td></td></tr>
-                <tr><td>Anesthésie</td><td>{{ fiche.anesthesie }}</td><td></td></tr>
-                <tr><td>Prime transport</td><td>{{ fiche.prime_transport }}</td><td></td></tr>
+                <tr><td>Pourcentage sur prestations</td><td>{{ fiche.pourcentage_prestations }}</td><td></td></tr>
+                <tr><td>Prime de transport</td><td>{{ fiche.prime_transport }}</td><td></td></tr>
                 <tr><td>Ancienneté</td><td>{{ fiche.anciennete }}</td><td></td></tr>
             </tbody>
         </table>
@@ -125,28 +147,13 @@
         <br>
         <div class="section-title">TOTALS</div>
         <table>
-            <tr>
-                <td><strong>Total avant retenue</strong></td>
-                <td>{{ fiche.total_avant_retenu }}</td>
-            </tr>
-            <tr>
-                <td><strong>Total après retenue</strong></td>
-                <td>{{ fiche.total_apres_retenu }}</td>
-            </tr>
-            <tr>
-                <td><strong>Net à payer</strong></td>
-                <td>{{ fiche.net_a_payer }}</td>
-            </tr>
+            <tr><td><strong>Total avant retenues</strong></td><td>{{ fiche.total_avant_retenues }}</td></tr>
+            <tr><td><strong>Total des retenues</strong></td><td>{{ fiche.total_retenues }}</td></tr>
+            <tr><td><strong>Net à payer</strong></td><td>{{ fiche.net_a_payer }}</td></tr>
         </table>
-
-        {% if fiche.observation %}
-            <br>
-            <div class="section-title">OBSERVATIONS</div>
-            <p>{{ fiche.observation }}</p>
-        {% endif %}
     </div>
 {% empty %}
-    <p style="text-align: center;">Aucune fiche trouvée.</p>
+    <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
 
 </body>

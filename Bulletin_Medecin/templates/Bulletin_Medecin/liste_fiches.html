@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Fiche de Paie</title>
+    <title>Fiche de Prestation</title>
     <style>
         body {
             font-family: "Courier New", Courier, monospace;
@@ -60,30 +60,51 @@
             margin-bottom: 50px;
         }
 
-        /* Style pour le bouton retour */
+        /* Style bouton retour */
         .btn-retour {
             display: inline-block;
-            margin: 20px auto;
-            padding: 10px 20px;
+            margin: 15px;
+            padding: 8px 15px;
             background-color: #2a9d8f;
             color: white;
             text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
-            text-align: center;
         }
-
         .btn-retour:hover {
             background-color: #21867a;
         }
 
-        .retour-container {
-            text-align: center;
-            margin-bottom: 50px;
+
+            .btn-print {
+        display: inline-block;
+        margin: 15px 10px;
+        padding: 8px 15px;
+        background-color: #264653;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        cursor: pointer;
+    }
+
+    .btn-print:hover {
+        background-color: #1b2e3b;
+    }
+
+    @media print {
+        .btn-print, .btn-retour {
+            display: none;
         }
+    }
+
     </style>
 </head>
 <body>
+<a href="/conixpaie/Bulletin_Medecin/ficheprestation" class="btn-retour">← Retour à l'administration</a>
+<!-- Bouton Imprimer -->
+<button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
 {% for fiche in fiches %}
@@ -104,15 +125,20 @@
                 <tr>
                     <th>NATURE</th>
                     <th class="small-col">MONTANT</th>
-                    <th>Observation</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Consultations</td><td>{{ fiche.consultations }}</td><td></td></tr>
-                <tr><td>Chirurgies</td><td>{{ fiche.chirurgie }}</td><td></td></tr>
-                <tr><td>Aide opératoire</td><td>{{ fiche.aide }}</td><td></td></tr>
-                <tr><td>Prime Laboratoire</td><td>{{ fiche.prime_laboratoire }}</td><td></td></tr>
-                <tr><td>Bonus prescription pharmacie</td><td>{{ fiche.bonus_prescription_pharmacie }}</td><td></td></tr>
+                <tr><td>Consultations</td><td>{{ fiche.consultations }}</td></tr>
+                <tr><td>Échographie (Prescripteur)</td><td>{{ fiche.echographie_prescripteur }}</td></tr>
+                <tr><td>Échographie (Acteur)</td><td>{{ fiche.echographie_acteur }}</td></tr>
+                <tr><td>% Hospitalisation</td><td>{{ fiche.pourcentage_hospitalisation }}</td></tr>
+                <tr><td>Accouchements</td><td>{{ fiche.accouchements }}</td></tr>
+                <tr><td>Chirurgies</td><td>{{ fiche.chirurgie }}</td></tr>
+                <tr><td>Aides</td><td>{{ fiche.aides }}</td></tr>
+                <tr><td>Prescription labo</td><td>{{ fiche.prescription_labo }}</td></tr>
+                <tr><td>Bonus pharmacie</td><td>{{ fiche.bonus_pharmacie }}</td></tr>
+                <tr><td>Prime de transport</td><td>{{ fiche.prime_transport }}</td></tr>
+                <tr><td>Ancienneté</td><td>{{ fiche.anciennete }}</td></tr>
             </tbody>
         </table>
 
@@ -140,12 +166,8 @@
         </table>
     </div>
 {% empty %}
-    <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
+    <p style="text-align: center;">Aucune fiche trouvée.</p>
 {% endfor %}
-
-<div class="retour-container">
-    <a href="/admin/Bulletin_MedecinConsultant/fichedepaie" class="btn-retour">Retour</a>
-</div>
 
 </body>
 </html>

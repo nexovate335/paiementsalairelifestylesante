@@ -60,25 +60,54 @@
             margin-bottom: 50px;
         }
 
-        .retour-btn {
+        /* Style du bouton retour */
+        .btn-retour {
             display: inline-block;
+            margin: 15px 0 25px 0;
+            padding: 8px 15px;
             background-color: #2a9d8f;
             color: white;
-            text-decoration: none;
-            padding: 10px 16px;
             border-radius: 5px;
-            margin: 30px auto;
-            display: block;
-            width: fit-content;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        .retour-btn:hover {
-            background-color: #21867a;
+        .btn-retour:hover {
+            background-color: #1f7a6a;
         }
+
+        
+            .btn-print {
+        display: inline-block;
+        margin: 15px 10px;
+        padding: 8px 15px;
+        background-color: #264653;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        cursor: pointer;
+    }
+    .btn-print:hover {
+        background-color: #1b2e3b;
+    }
+
+    @media print {
+        .btn-print, .btn-retour {
+            display: none;
+        }
+    }
     </style>
 </head>
 <body>
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
+
+<!-- Bouton Retour vers l'admin Blanchisserie -->
+<a href="/conixpaie/Bulletin_Blanchisserie/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
+<!-- Bouton Imprimer -->
+<button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
 
 {% for fiche in fiches %}
     <div class="fiche-container">
@@ -89,29 +118,29 @@
             <p><strong>Poste :</strong> {{ fiche.poste }}</p>
             <p><strong>Grade :</strong> {{ fiche.grade }}</p>
             <p><strong>Fonction :</strong> {{ fiche.fonction }}</p>
-            <p><strong>Mois :</strong> {{ fiche.mois }} &nbsp; <strong>Année :</strong> {{ fiche.annee }}</p>
+            <p><strong>Mois :</strong> {{ fiche.mois }} &nbsp;&nbsp; <strong>Année :</strong> {{ fiche.annee }}</p>
         </div>
 
         <div class="section-title">PRESTATIONS</div>
         <table>
             <thead>
                 <tr>
-                    <th>NATURE</th>
-                    <th class="small-col">MONTANT</th>
+                    <th>Désignation</th>
+                    <th class="small-col">Montant</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Pourcentage sur Prestations</td>
-                    <td>{{ fiche.pourcentage_prestations }}</td>
-                </tr>
-                <tr>
-                    <td>Prime de Transport</td>
-                    <td>{{ fiche.prime_transport }}</td>
+                    <td>Prestations</td>
+                    <td>{{ fiche.prestations }}</td>
                 </tr>
                 <tr>
                     <td>Ancienneté</td>
                     <td>{{ fiche.anciennete }}</td>
+                </tr>
+                <tr>
+                    <td>Transport</td>
+                    <td>{{ fiche.transport }}</td>
                 </tr>
             </tbody>
         </table>
@@ -145,9 +174,6 @@
 {% empty %}
     <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
-
-<!-- Bouton de retour -->
-<a href="/admin/Bulletin_Bloc/fichedepaie/" class="retour-btn">⬅ Retour à l'administration</a>
 
 </body>
 </html>

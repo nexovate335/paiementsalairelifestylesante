@@ -60,7 +60,6 @@
             margin-bottom: 50px;
         }
 
-        /* Style du bouton retour */
         .btn-retour {
             display: inline-block;
             margin: 15px 0 25px 0;
@@ -76,74 +75,84 @@
         .btn-retour:hover {
             background-color: #1f7a6a;
         }
+        .btn-print {
+    display: inline-block;
+    margin: 15px 10px;
+    padding: 8px 15px;
+    background-color: #264653;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+}
+
+.btn-print:hover {
+    background-color: #1b2e3b;
+}
+
+@media print {
+    .btn-print, .btn-retour {
+        display: none;
+    }
+}
+
+
     </style>
 </head>
 <body>
-<img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
-<!-- Bouton Retour vers l'admin Blanchisserie -->
-<a href="/admin/Bulletin_Blanchisserie/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
+<a href="/conixpaie/Bulletin_Securite/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
+
+<!-- Bouton Imprimer -->
+<button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
+
+
+<img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
 {% for fiche in fiches %}
     <div class="fiche-container">
         <h1>FICHE DE PAIE</h1>
 
         <div class="header-section">
-            <p><strong>NOM :</strong> {{ fiche.nom }}</p>
-            <p><strong>Poste :</strong> {{ fiche.poste }}</p>
-            <p><strong>Grade :</strong> {{ fiche.grade }}</p>
-            <p><strong>Fonction :</strong> {{ fiche.fonction }}</p>
-            <p><strong>Mois :</strong> {{ fiche.mois }} &nbsp;&nbsp; <strong>Année :</strong> {{ fiche.annee }}</p>
+            <p><strong>NOM:</strong> {{ fiche.nom }}</p>
+            <p><strong>Poste:</strong> {{ fiche.poste }}</p>
+            <p><strong>Grade:</strong> {{ fiche.grade }}</p>
+            <p><strong>Fonction:</strong> {{ fiche.fonction }}</p>
+            <p><strong>Mois:</strong> {{ fiche.mois }} &nbsp; <strong>Année:</strong> {{ fiche.annee }}</p>
         </div>
 
         <div class="section-title">PRESTATIONS</div>
         <table>
             <thead>
                 <tr>
-                    <th>Désignation</th>
-                    <th class="small-col">Montant</th>
+                    <th>NATURE</th>
+                    <th class="small-col">MONTANT</th>
+                    <th>Observation</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Prestations</td>
-                    <td>{{ fiche.prestations }}</td>
-                </tr>
-                <tr>
-                    <td>Ancienneté</td>
-                    <td>{{ fiche.anciennete }}</td>
-                </tr>
-                <tr>
-                    <td>Transport</td>
-                    <td>{{ fiche.transport }}</td>
-                </tr>
+                <tr><td>Prestations générales</td><td>{{ fiche.prestations }}</td><td></td></tr>
+                <tr><td>Transport (jour)</td><td>{{ fiche.transport_jour }}</td><td></td></tr>
+                <tr><td>Transport (nuit, fériés)</td><td>{{ fiche.transport_nuit_feries }}</td><td></td></tr>
+                <tr><td>Autres prestations</td><td>{{ fiche.autres_prestations }}</td><td></td></tr>
+                <tr><td>Prime d'ancienneté</td><td>{{ fiche.prime_anciennete }}</td><td></td></tr>
             </tbody>
         </table>
 
         <br>
         <div class="section-title">RETENUES</div>
         <table>
-            <tr>
-                <td>Avance sur salaire</td>
-                <td>{{ fiche.avance_salaire }}</td>
-            </tr>
+            <tr><td>Avance sur salaire</td><td>{{ fiche.avance_salaire }}</td></tr>
         </table>
 
         <br>
         <div class="section-title">TOTALS</div>
         <table>
-            <tr>
-                <td><strong>Total avant retenues</strong></td>
-                <td>{{ fiche.total_avant_retenues }}</td>
-            </tr>
-            <tr>
-                <td><strong>Total des retenues</strong></td>
-                <td>{{ fiche.total_retenues }}</td>
-            </tr>
-            <tr>
-                <td><strong>Net à payer</strong></td>
-                <td>{{ fiche.net_a_payer }}</td>
-            </tr>
+            <tr><td><strong>Total avant retenues</strong></td><td>{{ fiche.total_avant_retenues }}</td></tr>
+            <tr><td><strong>Total des retenues</strong></td><td>{{ fiche.total_retenues }}</td></tr>
+            <tr><td><strong>Net à payer</strong></td><td>{{ fiche.net_a_payer }}</td></tr>
         </table>
     </div>
 {% empty %}

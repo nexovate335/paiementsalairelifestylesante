@@ -60,7 +60,6 @@
             margin-bottom: 50px;
         }
 
-        /* Style du bouton Retour */
         .btn-retour {
             display: inline-block;
             margin: 15px 0 25px 0;
@@ -76,36 +75,41 @@
         .btn-retour:hover {
             background-color: #1f7a6a;
         }
-           .btn-print {
-        display: inline-block;
-        margin: 15px 10px;
-        padding: 8px 15px;
-        background-color: #264653;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        cursor: pointer;
-    }
-    .btn-print:hover {
-        background-color: #1b2e3b;
-    }
 
-    @media print {
-        .btn-print, .btn-retour {
-            display: none;
-        }
+
+        .btn-print {
+    display: inline-block;
+    margin: 15px 10px;
+    padding: 8px 15px;
+    background-color: #264653;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+}
+
+.btn-print:hover {
+    background-color: #1b2e3b;
+}
+
+@media print {
+    .btn-print, .btn-retour {
+        display: none;
     }
+}
+
     </style>
 </head>
 <body>
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
 
-<!-- Bouton Retour vers admin -->
-<a href="/conixpaie/Bulletin_Adminstration/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
-<!-- Bouton Imprimer -->
+<a href="/conixpaie/Bulletin_SF/prestationmensuelle/" class="btn-retour">Retour à l'administration</a>
+
+
 <button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
+
 
 {% for fiche in fiches %}
     <div class="fiche-container">
@@ -125,63 +129,43 @@
                 <tr>
                     <th>NATURE</th>
                     <th class="small-col">MONTANT</th>
-                    <th>Observation et Retenues</th>
+                    <th>Observation</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Pourcentage sur Prestations</td>
-                    <td>{{ fiche.pourcentage_prestations }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Bonus sur Prestations</td>
-                    <td>{{ fiche.bonus_prestations }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Prime sur informatique</td>
-                    <td>{{ fiche.prime_informatique }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Prime de Transport</td>
-                    <td>{{ fiche.prime_transport }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Ancienneté</td>
-                    <td>{{ fiche.anciennete }}</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>Avance sur salaire</td>
-                    <td>{{ fiche.avance_salaire }}</td>
-                    <td></td>
-                </tr>
+                <tr><td>Accouchement</td><td>{{ fiche.Accouchement }}</td><td></td></tr>
+                <tr><td>Actes</td><td>{{ fiche.actes }}</td><td></td></tr>
+                <tr><td>Prescriptions Laboratoire</td><td>{{ fiche.prescriptions_laboratoire }}</td><td></td></tr>
+                <tr><td>Prime Hospitalisation</td><td>{{ fiche.prime_hospitalisation }}</td><td></td></tr>
+                <tr><td>Prime de Transport</td><td>{{ fiche.prime_transport }}</td><td></td></tr>
+                <tr><td>Ancienneté</td><td>{{ fiche.anciennete }}</td><td></td></tr>
             </tbody>
         </table>
 
         <br>
-        <div class="section-title">TOTAL</div>
+        <div class="section-title">RETENUES</div>
         <table>
-            <tr>
-                <td><strong>Total avant retenues</strong></td>
-                <td>{{ fiche.total_avant_retenues }}</td>
-            </tr>
-            <tr>
-                <td><strong>Total des retenues</strong></td>
-                <td>{{ fiche.total_retenues }}</td>
-            </tr>
-            <tr>
-                <td><strong>Net à payer</strong></td>
-                <td>{{ fiche.net_a_payer }}</td>
-            </tr>
+            <tr><td>Avance sur salaire</td><td>{{ fiche.avance_salaire }}</td></tr>
         </table>
+
+        <br>
+        <div class="section-title">TOTALS</div>
+        <table>
+            <tr><td><strong>Total avant retenue</strong></td><td>{{ fiche.total_avant_retenu }}</td></tr>
+            <tr><td><strong>Total des retenues</strong></td><td>{{ fiche.avance_salaire }}</td></tr>
+            <tr><td><strong>Net à payer</strong></td><td>{{ fiche.net_a_payer }}</td></tr>
+        </table>
+
+        {% if fiche.observation %}
+        <br>
+        <div class="section-title">OBSERVATION</div>
+        <p>{{ fiche.observation }}</p>
+        {% endif %}
     </div>
 {% empty %}
     <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
+
 
 </body>
 </html>

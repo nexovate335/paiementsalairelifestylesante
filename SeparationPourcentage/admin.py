@@ -47,16 +47,27 @@ class SeparationPourcentageAdmin(admin.ModelAdmin):
         obj.surveillant = admin_total * Decimal('0.20')
         obj.informatique = admin_total * Decimal('0.12')
 
+       # Calcul du total pour la section "autre"
         autre_total = reste * Decimal('0.15') * Decimal('0.60')
+
+        # Réception - 25% réparti entre 2
         obj.reception_1 = autre_total * Decimal('0.25') / 2
         obj.reception_2 = autre_total * Decimal('0.25') / 2
+
+        # Caisse - 25% réparti entre 2
         obj.caisse_1 = autre_total * Decimal('0.25') / 2
         obj.caisse_2 = autre_total * Decimal('0.25') / 2
-        obj.Menage_1 = autre_total * Decimal('0.12') / 3
-        obj.Menage_2 = autre_total * Decimal('0.08') / 3
-        obj.Menage_3 = autre_total * Decimal('0.06') / 3
+
+        # Ménage - 25% réparti selon 45%, 32.5%, 22.5%
+        menage_total = autre_total * Decimal('0.25')
+        obj.Menage_1 = menage_total * Decimal('0.45')
+        obj.Menage_2 = menage_total * Decimal('0.325')
+        obj.Menage_3 = menage_total * Decimal('0.225')
+
+        # Sécurité - 25% réparti entre 3
         obj.securite_1 = autre_total * Decimal('0.25') / 3
         obj.securite_2 = autre_total * Decimal('0.25') / 3
         obj.securite_3 = autre_total * Decimal('0.25') / 3
+
 
         obj.save()

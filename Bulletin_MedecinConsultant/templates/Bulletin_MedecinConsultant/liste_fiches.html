@@ -60,23 +60,52 @@
             margin-bottom: 50px;
         }
 
-        .return-link {
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        .return-link a {
-            text-decoration: none;
-            color: white;
+        /* Style bouton retour */
+        .btn-retour {
+            display: inline-block;
+            margin: 15px;
+            padding: 8px 15px;
             background-color: #2a9d8f;
-            padding: 8px 16px;
+            color: white;
+            text-decoration: none;
             border-radius: 5px;
             font-weight: bold;
         }
+        .btn-retour:hover {
+            background-color: #21867a;
+        }
+
+
+            .btn-print {
+        display: inline-block;
+        margin: 15px 10px;
+        padding: 8px 15px;
+        background-color: #264653;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        cursor: pointer;
+    }
+
+    .btn-print:hover {
+        background-color: #1b2e3b;
+    }
+
+    @media print {
+        .btn-print, .btn-retour {
+            display: none;
+        }
+    }
+
     </style>
 </head>
 <body>
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
+<a href="/conixpaie/Bulletin_MedecinConsultant/fichedepaie" class="btn-retour">Retour à l'administration</a>
+<!-- Bouton Imprimer -->
+<button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
 
 {% for fiche in fiches %}
     <div class="fiche-container">
@@ -100,12 +129,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Accouchement</td><td>{{ fiche.Accouchement }}</td><td></td></tr>
-                <tr><td>Actes</td><td>{{ fiche.actes }}</td><td></td></tr>
-                <tr><td>Prescriptions Laboratoire</td><td>{{ fiche.prescriptions_laboratoire }}</td><td></td></tr>
-                <tr><td>Prime Hospitalisation</td><td>{{ fiche.prime_hospitalisation }}</td><td></td></tr>
-                <tr><td>Prime de Transport</td><td>{{ fiche.prime_transport }}</td><td></td></tr>
-                <tr><td>Ancienneté</td><td>{{ fiche.anciennete }}</td><td></td></tr>
+                <tr><td>Consultations</td><td>{{ fiche.consultations }}</td><td></td></tr>
+                <tr><td>Chirurgies</td><td>{{ fiche.chirurgie }}</td><td></td></tr>
+                <tr><td>Aide opératoire</td><td>{{ fiche.aide }}</td><td></td></tr>
+                <tr><td>Prime Laboratoire</td><td>{{ fiche.prime_laboratoire }}</td><td></td></tr>
+                <tr><td>Bonus prescription pharmacie</td><td>{{ fiche.bonus_prescription_pharmacie }}</td><td></td></tr>
             </tbody>
         </table>
 
@@ -118,24 +146,23 @@
         <br>
         <div class="section-title">TOTALS</div>
         <table>
-            <tr><td><strong>Total avant retenue</strong></td><td>{{ fiche.total_avant_retenu }}</td></tr>
-            <tr><td><strong>Total des retenues</strong></td><td>{{ fiche.avance_salaire }}</td></tr>
-            <tr><td><strong>Net à payer</strong></td><td>{{ fiche.net_a_payer }}</td></tr>
+            <tr>
+                <td><strong>Total avant retenue</strong></td>
+                <td>{{ fiche.total_avant_retenu }}</td>
+            </tr>
+            <tr>
+                <td><strong>Total après retenue</strong></td>
+                <td>{{ fiche.total_apres_retenu }}</td>
+            </tr>
+            <tr>
+                <td><strong>Net à payer</strong></td>
+                <td>{{ fiche.net_a_payer }}</td>
+            </tr>
         </table>
-
-        {% if fiche.observation %}
-        <br>
-        <div class="section-title">OBSERVATION</div>
-        <p>{{ fiche.observation }}</p>
-        {% endif %}
     </div>
 {% empty %}
     <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
-
-<div class="return-link">
-    <a href="/admin/Bulletin_SF/PrestationMensuelle/">Retour à l'administration</a>
-</div>
 
 </body>
 </html>

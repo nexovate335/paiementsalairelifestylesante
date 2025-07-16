@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Fiche de Prestation</title>
+    <title>Fiche de Paie</title>
     <style>
         body {
             font-family: "Courier New", Courier, monospace;
@@ -60,25 +60,61 @@
             margin-bottom: 50px;
         }
 
+        /* Style du bouton Retour */
         .btn-retour {
             display: inline-block;
-            margin: 20px;
-            padding: 8px 16px;
+            margin: 15px 0 25px 0;
+            padding: 8px 15px;
             background-color: #2a9d8f;
             color: white;
-            text-decoration: none;
             border-radius: 5px;
+            text-decoration: none;
             font-weight: bold;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        .btn-retour:hover {
+            background-color: #1f7a6a;
+        }
+
+.btn-print {
+    display: inline-block;
+    margin: 15px 10px;
+    padding: 8px 15px;
+    background-color: #264653;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+}
+
+.btn-print:hover {
+    background-color: #1b2e3b;
+}
+
+@media print {
+    .btn-print, .btn-retour {
+        display: none;
+    }
+}
+
+        
     </style>
 </head>
 <body>
-<a href="/admin/Bulletin_Medecin/FichePrestation/" class="btn-retour">← Retour</a>
 <img src="{% static 'images/lifestyle.jpg' %}" alt="Logo" style="position: absolute; top: 20px; right: 20px; height: 80px;">
+
+<!-- Bouton Retour vers admin -->
+<a href="/conixpaie/Bulletin_Menage/fichedepaie/" class="btn-retour">← Retour à l'administration</a>
+<!-- Bouton Imprimer -->
+<button onclick="window.print()" class="btn-print">🖨️ Imprimer la fiche</button>
+
 
 {% for fiche in fiches %}
     <div class="fiche-container">
-        <h1>FICHE DE PRESTATION</h1>
+        <h1>FICHE DE PAIE</h1>
 
         <div class="header-section">
             <p><strong>NOM:</strong> {{ fiche.nom }}</p>
@@ -94,39 +130,43 @@
                 <tr>
                     <th>NATURE</th>
                     <th class="small-col">MONTANT</th>
+                    <th>Observation et Retenues</th>
                 </tr>
             </thead>
             <tbody>
-                <tr><td>Consultations</td><td>{{ fiche.consultations }}</td></tr>
-                <tr><td>Échographie (Prescripteur)</td><td>{{ fiche.echographie_prescripteur }}</td></tr>
-                <tr><td>Échographie (Acteur)</td><td>{{ fiche.echographie_acteur }}</td></tr>
-                <tr><td>% Hospitalisation</td><td>{{ fiche.pourcentage_hospitalisation }}</td></tr>
-                <tr><td>Accouchements</td><td>{{ fiche.accouchements }}</td></tr>
-                <tr><td>Chirurgies</td><td>{{ fiche.chirurgie }}</td></tr>
-                <tr><td>Aides</td><td>{{ fiche.aides }}</td></tr>
-                <tr><td>Prescription labo</td><td>{{ fiche.prescription_labo }}</td></tr>
-                <tr><td>Bonus pharmacie</td><td>{{ fiche.bonus_pharmacie }}</td></tr>
-                <tr><td>Prime de transport</td><td>{{ fiche.prime_transport }}</td></tr>
-                <tr><td>Ancienneté</td><td>{{ fiche.anciennete }}</td></tr>
+                <tr>
+                    <td>Pourcentage sur Prestations</td>
+                    <td>{{ fiche.prestations }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Prime de Transport</td>
+                    <td>{{ fiche.prime_transport }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Ancienneté</td>
+                    <td>{{ fiche.anciennete }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Avance sur salaire</td>
+                    <td>{{ fiche.avance_salaire }}</td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
 
         <br>
-        <div class="section-title">RETENUES</div>
-        <table>
-            <tr><td>Avance sur salaire</td><td>{{ fiche.avance_salaire }}</td></tr>
-        </table>
-
-        <br>
-        <div class="section-title">TOTALS</div>
+        <div class="section-title">TOTAL</div>
         <table>
             <tr>
-                <td><strong>Total avant retenue</strong></td>
-                <td>{{ fiche.total_avant_retenu }}</td>
+                <td><strong>Total avant retenues</strong></td>
+                <td>{{ fiche.total_avant_retenues }}</td>
             </tr>
             <tr>
-                <td><strong>Total après retenue</strong></td>
-                <td>{{ fiche.total_apres_retenu }}</td>
+                <td><strong>Total des retenues</strong></td>
+                <td>{{ fiche.total_retenues }}</td>
             </tr>
             <tr>
                 <td><strong>Net à payer</strong></td>
@@ -135,7 +175,7 @@
         </table>
     </div>
 {% empty %}
-    <p style="text-align: center;">Aucune fiche trouvée.</p>
+    <p style="text-align: center;">Aucune fiche de paie trouvée.</p>
 {% endfor %}
 
 </body>

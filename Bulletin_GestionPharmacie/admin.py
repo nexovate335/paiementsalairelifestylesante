@@ -32,7 +32,7 @@ class FicheDePaieAdmin(admin.ModelAdmin):
     )
 
     def voir_fiche(self, obj):
-        url = f"/Bulletin_Adminstration/fiches/{obj.id}/"
+        url = f"/Bulletin_GestionPharmacie/fiches/{obj.id}/"
         return format_html(
             '<a class="button" style="color: white; background-color: #2a9d8f; padding: 4px 8px; border-radius: 4px;" href="{}" target="_blank">Voir fiche</a>',
             url

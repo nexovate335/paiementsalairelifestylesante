@@ -30,7 +30,7 @@ class FichePrestation(models.Model):
     consultations = models.IntegerField(blank=True, null=True)
     echographie_prescripteur = models.IntegerField(blank=True, null=True)
     echographie_acteur = models.IntegerField(blank=True, null=True)
-    pourcentage_hospitalisation = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    pourcentage_hospitalisation = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     accouchements = models.IntegerField(blank=True, null=True)
     chirurgie = models.IntegerField(blank=True, null=True)
     aides = models.IntegerField(blank=True, null=True)
