@@ -1,7 +1,20 @@
-# Pansement/admin.py
 from django.contrib import admin
 from .models import Pansement
 
 class PansementAdmin(admin.ModelAdmin):
-    list_display = ('libelle', 'montantTT', 'maison', 'acteur')
-    readonly_fields = ('maison', 'acteur')
+    list_display = ('libelle', 'montantTT','type_maison', 'montant_maison', 'acteur', 'montant_acteur')
+    readonly_fields = ('montant_maison', 'type_maison', 'montant_acteur')
+
+    fieldsets = (
+        (None, {
+            'fields': ('libelle', 'montantTT')
+        }),
+        ('Acteur', {
+            'fields': ('acteur', 'montant_acteur')
+        }),
+        ('Montant Maison (auto-calculé)', {
+            'fields': ('montant_maison', 'type_maison'),
+        }),
+    )
+
+admin.site.register(Pansement, PansementAdmin)

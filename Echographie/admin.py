@@ -18,5 +18,4 @@ class ActeMedicalAdmin(admin.ModelAdmin):
 @admin.register(PaiementMonitorage)
 class PaiementMonitorageAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'montant_total', 'msn_nom', 'msn_montant', 'acteur_nom', 'acteur_montant', 'created_at')
-    search_fields = ('libelle', 'msn_nom', 'acteur_nom')
     list_filter = ('created_at',)

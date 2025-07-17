@@ -3,8 +3,7 @@ from decimal import Decimal
 
 class ActeMedical(models.Model):
     TYPE_CHOICES = [
-        ('echographie', 'Échographie'),
-        ('iva_ivl', 'IVA/IVL'),
+        ('echographie', 'Échographie'),  
         # Tu peux en ajouter d'autres ici si besoin
     ]
 
