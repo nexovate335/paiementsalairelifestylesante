@@ -6,7 +6,7 @@ class PrestationMensuelleAdmin(admin.ModelAdmin):
     list_display = (
         'nom', 'mois', 'annee',
         'total_avant_retenu', 'total_apres_retenu', 'net_a_payer',
-        'voir_fiche'  # Ajout du bouton dans la liste des colonnes
+        'voir_fiche'  # Bouton personnalisé
     )
     list_filter = ('mois', 'annee')
     readonly_fields = ('total_avant_retenu', 'total_apres_retenu', 'net_a_payer')
@@ -34,6 +34,7 @@ class PrestationMensuelleAdmin(admin.ModelAdmin):
                 'prime_caisse',
                 'prime_transport',
                 'anciennete',
+                'prime_hospitalisation',  # Ajout ici
                 'avance_salaire',
             )
         }),

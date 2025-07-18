@@ -30,7 +30,7 @@ class FicheDePaie(models.Model):
     # Prestations
     pourcentage_prestations = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
     prelevements = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
-    autres_prestations = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
+    prime_hospitalisation = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)  
     prime_transport = models.DecimalField(max_digits=10, decimal_places=2, default=0, null=True, blank=True)
 
     # Retenues
@@ -40,7 +40,7 @@ class FicheDePaie(models.Model):
         champs = [
             self.pourcentage_prestations,
             self.prelevements,
-            self.autres_prestations,
+            self.prime_hospitalisation,
             self.prime_transport,
         ]
         return sum([c or 0 for c in champs])

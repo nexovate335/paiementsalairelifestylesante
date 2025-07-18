@@ -41,6 +41,7 @@ class PrestationMensuelle(models.Model):
     prime_transport = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     anciennete = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     avance_salaire = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    prime_hospitalisation = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
     observation = models.TextField(blank=True, null=True)
 
@@ -59,6 +60,7 @@ class PrestationMensuelle(models.Model):
             self.anesthesie,
             self.prime_transport,
             self.anciennete,
+            self.prime_hospitalisation,
         ]
         return sum([p or 0 for p in prestations])
 
