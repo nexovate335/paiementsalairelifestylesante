@@ -19,8 +19,9 @@ class FicheDePaieAdmin(admin.ModelAdmin):
             'fields': (
                 'pourcentage_prestations',
                 'prelevements',
-                'autres_prestations',
                 'prime_transport',
+                'anciennete',
+
             )
         }),
         ('Retenue', {
