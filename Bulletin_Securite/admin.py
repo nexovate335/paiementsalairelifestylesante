@@ -16,7 +16,6 @@ class FicheDePaieAdmin(admin.ModelAdmin):
             'fields': (
                 'prestations',
                 'transport_jour',
-                'transport_nuit_feries',
                 'autres_prestations',
                 'prime_anciennete',
             )
