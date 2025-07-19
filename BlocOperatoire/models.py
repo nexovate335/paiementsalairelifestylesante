@@ -256,8 +256,10 @@ class ActeMedical(models.Model):
 class ActeMedicalSimple(models.Model):
     TYPE_ACTES = [
         ("Hernie Ombilicale", "Hernie Ombilicale"),
+        ("Cure de prolapsus", "Cure de prolapsus"),
         ("Polype", "Polype"),
         ("Eventration", "Eventration"),
+        ("Cystocele", "Cystocele"),
         ("Synechie", "Synechie"),
         ("Cauthérisation", "Cauthérisation"),
     ]
