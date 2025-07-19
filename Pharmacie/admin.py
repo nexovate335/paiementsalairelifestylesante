@@ -5,7 +5,9 @@ from .models import Pharmacie
 class PharmacieAdmin(admin.ModelAdmin):
     list_display = (
         'libelle', 
-        'prix_vente', 
+        'prix_vente',
+        'mois',
+        'annee', 
         'benefice', 
         'maison', 
         'controleur', 

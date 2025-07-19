@@ -1,5 +1,23 @@
 from django.db import models
 from decimal import Decimal
+from datetime import datetime
+
+MOIS_CHOICES = [
+    ('janvier', 'Janvier'),
+    ('fevrier', 'Février'),
+    ('mars', 'Mars'),
+    ('avril', 'Avril'),
+    ('mai', 'Mai'),
+    ('juin', 'Juin'),
+    ('juillet', 'Juillet'),
+    ('aout', 'Août'),
+    ('septembre', 'Septembre'),
+    ('octobre', 'Octobre'),
+    ('novembre', 'Novembre'),
+    ('decembre', 'Décembre'),
+]
+
+ANNEE_CHOICES = [(str(annee), str(annee)) for annee in range(2020, datetime.now().year + 20)]
 
 # -----------------------------
 # Base Mixin pour la répartition
@@ -36,6 +54,8 @@ class Consultation(models.Model, RepartitionMixin):
     libelle = models.CharField(max_length=255)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     acteur_nom = models.CharField(max_length=255)
@@ -55,6 +75,8 @@ class Consultation(models.Model, RepartitionMixin):
 class CertificatMedical(models.Model):
     libelle = models.CharField(max_length=255)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     # Maison de santé
     msn_nom = models.CharField(max_length=255)

@@ -1,9 +1,30 @@
 from django.db import models
 from decimal import Decimal, ROUND_HALF_UP
+from datetime import datetime
+
+MOIS_CHOICES = [
+    ('janvier', 'Janvier'),
+    ('fevrier', 'Février'),
+    ('mars', 'Mars'),
+    ('avril', 'Avril'),
+    ('mai', 'Mai'),
+    ('juin', 'Juin'),
+    ('juillet', 'Juillet'),
+    ('aout', 'Août'),
+    ('septembre', 'Septembre'),
+    ('octobre', 'Octobre'),
+    ('novembre', 'Novembre'),
+    ('decembre', 'Décembre'),
+]
+
+ANNEE_CHOICES = [(str(annee), str(annee)) for annee in range(2020, datetime.now().year + 20)]
+
 
 class Pharmacie(models.Model):
     libelle = models.CharField(max_length=255)
     prix_vente = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     @property
     def benefice(self):

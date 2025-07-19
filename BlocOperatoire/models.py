@@ -1,9 +1,29 @@
 from django.db import models
 from decimal import Decimal
+from datetime import datetime
+
+MOIS_CHOICES = [
+    ('janvier', 'Janvier'),
+    ('fevrier', 'Février'),
+    ('mars', 'Mars'),
+    ('avril', 'Avril'),
+    ('mai', 'Mai'),
+    ('juin', 'Juin'),
+    ('juillet', 'Juillet'),
+    ('aout', 'Août'),
+    ('septembre', 'Septembre'),
+    ('octobre', 'Octobre'),
+    ('novembre', 'Novembre'),
+    ('decembre', 'Décembre'),
+]
+
+ANNEE_CHOICES = [(str(annee), str(annee)) for annee in range(2020, datetime.now().year + 20)]
 
 class BlocOperatoire(models.Model):
     libelle = models.CharField(max_length=255)
     montantTT = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     class Meta:
         abstract = True  # Classe de base abstraite, pas de table DB ici
@@ -22,12 +42,16 @@ class BlocOperatoire(models.Model):
         # Par défaut 35%, peut être redéfini dans les sous-classes
         return round(self.montantTT * Decimal('0.35'), 2)
 
+
 # === Classe spécifique pour Accouchement ===
 class Accouchement(BlocOperatoire):
     medecin = models.CharField("Médecin", max_length=255, null=True, blank=True)
     sage_femme = models.CharField("Sage-femme", max_length=255, null=True, blank=True)
     aide = models.CharField("Aide", max_length=255, null=True, blank=True)
     pediatre = models.CharField("Pédiatre", max_length=255, null=True, blank=True)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
+
 
     def __str__(self):
         return f"Accouchement: {self.libelle} - {self.montantTT} FCFA"
@@ -58,6 +82,8 @@ class Cesarienne(BlocOperatoire):
     aide = models.CharField("Aide", max_length=255, null=True, blank=True)
     pediatre = models.CharField("Pédiatre", max_length=255, null=True, blank=True)
     sage_femme = models.CharField("Sage-femme", max_length=255, null=True, blank=True)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     def __str__(self):
         return f"Césarienne: {self.libelle} - {self.montantTT} FCFA"
@@ -96,6 +122,8 @@ class CureHernie(BlocOperatoire):
     chirurgien = models.CharField("Chirurgien", max_length=255, null=True, blank=True)
     aide = models.CharField("Aide", max_length=255, null=True, blank=True)
     panseur = models.CharField("Panseur", max_length=255, null=True, blank=True)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     def __str__(self):
         return f"Cure de hernie: {self.libelle} - {self.montantTT} FCFA"
@@ -130,6 +158,8 @@ class CureHernie(BlocOperatoire):
 class HVV(models.Model):
     libelle = models.CharField(max_length=255)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
@@ -188,6 +218,8 @@ class ActeMedical(models.Model):
     type_acte = models.CharField(max_length=100, choices=TYPE_ACTES)
     libelle = models.CharField(max_length=255)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     chirurgien_nom = models.CharField(max_length=255, blank=True, null=True)
@@ -233,6 +265,8 @@ class ActeMedicalSimple(models.Model):
     type_acte = models.CharField(max_length=100, choices=TYPE_ACTES)
     libelle = models.CharField(max_length=255)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     chirurgien_nom = models.CharField(max_length=255)
@@ -277,6 +311,8 @@ class ActeMedicalIntermediaire(models.Model):
     type_acte = models.CharField(max_length=100, choices=TYPE_ACTES)
     libelle = models.CharField(max_length=255)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     chirurgien_nom = models.CharField(max_length=255)
@@ -318,6 +354,8 @@ class ActeMedicalIntermediaire(models.Model):
 class PaiementIVA_IVL(models.Model):
     libelle = models.CharField(max_length=255)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     acteur_nom = models.CharField(max_length=255)
@@ -337,10 +375,6 @@ class PaiementIVA_IVL(models.Model):
     def __str__(self):
         return f"IVA/IVL - {self.libelle}"
     
-    # Classe Acte Médical (non consultation)
-# -----------------------------
-from django.db import models
-from decimal import Decimal
 
 class ActeTechnique(models.Model):
     TYPE_CHOICES = [
@@ -358,16 +392,15 @@ class ActeTechnique(models.Model):
         ('Implant', 'Implant'),
         ('Déchirure', 'Déchirure'),
         ('Expulsion', 'Expulsion'),
-        
-        
-        
-        
-        
+          
+    
     ]
 
     libelle = models.CharField(max_length=255)
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     montant_total = models.DecimalField(max_digits=10, decimal_places=2)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     msn_montant = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     acteur_nom = models.CharField(max_length=255)
@@ -389,6 +422,8 @@ class ActeTechnique(models.Model):
 class Varicocele(models.Model):
     libelle = models.CharField(max_length=255)
     montantTT = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     chirurgien = models.CharField(max_length=255)
     aide = models.CharField(max_length=255)

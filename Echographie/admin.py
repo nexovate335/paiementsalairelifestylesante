@@ -3,7 +3,7 @@ from .models import ActeMedical, PaiementMonitorage
 
 class ActeMedicalAdmin(admin.ModelAdmin):
     list_display = (
-        'type', 'libelle', 'montant_total',
+        'type', 'libelle','mois','annee', 'montant_total',
         'msn_montant', 'acteur_nom', 'acteur_montant',
         'aide_nom', 'aide_montant', 'created_at'
     )
@@ -17,5 +17,5 @@ class ActeMedicalAdmin(admin.ModelAdmin):
 
 @admin.register(PaiementMonitorage)
 class PaiementMonitorageAdmin(admin.ModelAdmin):
-    list_display = ('libelle', 'montant_total', 'msn_nom', 'msn_montant', 'acteur_nom', 'acteur_montant', 'created_at')
+    list_display = ('libelle', 'montant_total','mois','annee', 'msn_nom', 'msn_montant', 'acteur_nom', 'acteur_montant', 'created_at')
     list_filter = ('created_at',)

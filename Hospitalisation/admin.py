@@ -6,7 +6,7 @@ class ActeurHospitalisationInline(admin.TabularInline):
     extra = 1
 
 class PaiementHospitalisationAdmin(admin.ModelAdmin):
-    list_display = ('libelle', 'montant_total', 'msn_montant', 'repartition_detaillee', 'created_at')
+    list_display = ('libelle', 'montant_total','mois','annee', 'msn_montant', 'repartition_detaillee', 'created_at')
     inlines = [ActeurHospitalisationInline]
     readonly_fields = ('msn_montant', 'repartition_detaillee', 'created_at')
 

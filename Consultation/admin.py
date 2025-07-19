@@ -3,7 +3,7 @@ from .models import Consultation, CertificatMedical
     
 class ConsultationAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'type', 'montant_total',
+        'libelle', 'type', 'montant_total','mois','annee',
         'msn_montant', 'acteur_nom', 'acteur_montant',
         'aide_nom', 'aide_montant', 'created_at',
     )
@@ -18,7 +18,7 @@ class ConsultationAdmin(admin.ModelAdmin):
 @admin.register(CertificatMedical)
 class CertificatMedicalAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'montant_total',
+        'libelle', 'montant_total','mois','annee',
         'msn_nom', 'msn_montant',
         'acteur_nom', 'acteur_montant',
         'created_at'

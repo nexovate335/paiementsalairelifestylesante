@@ -1,9 +1,31 @@
 from django.db import models
 from decimal import Decimal
 from datetime import date
+from datetime import datetime
+
+MOIS_CHOICES = [
+    ('janvier', 'Janvier'),
+    ('fevrier', 'Février'),
+    ('mars', 'Mars'),
+    ('avril', 'Avril'),
+    ('mai', 'Mai'),
+    ('juin', 'Juin'),
+    ('juillet', 'Juillet'),
+    ('aout', 'Août'),
+    ('septembre', 'Septembre'),
+    ('octobre', 'Octobre'),
+    ('novembre', 'Novembre'),
+    ('decembre', 'Décembre'),
+]
+
+ANNEE_CHOICES = [(str(annee), str(annee)) for annee in range(2020, datetime.now().year + 20)]
+
+
 
 class LaboTrios(models.Model):
     libelle = models.CharField(max_length=255)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     tarif_maison = models.DecimalField(max_digits=10, decimal_places=2)
     tarif_trios = models.DecimalField(max_digits=10, decimal_places=2)
@@ -50,12 +72,6 @@ class LaboTrios(models.Model):
         return f"Labo Trios - {self.libelle}"
 
 
-from django.db import models
-from decimal import Decimal
-from datetime import date
-
-MOIS_CHOICES = [(i, date(1900, i, 1).strftime('%B')) for i in range(1, 13)]
-
 class LaboratoireMaison(models.Model):
     libelle = models.CharField(max_length=100)
     montant_total = models.DecimalField(max_digits=12, decimal_places=2)
@@ -76,8 +92,8 @@ class LaboratoireMaison(models.Model):
     assistante_nom = models.CharField(max_length=100)
     assistante_gain = models.DecimalField(max_digits=12, decimal_places=2, editable=False, default=0)
 
-    mois = models.IntegerField(choices=MOIS_CHOICES, default=date.today().month)
-    annee = models.IntegerField(default=date.today().year)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Répartition

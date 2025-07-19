@@ -8,7 +8,7 @@ from .models import (
 
 class AccouchementAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'montantTT', 'maison',
+        'libelle', 'montantTT','mois','annee', 'maison',
         'medecin', 'part_medecin',
         'sage_femme', 'part_sage_femme',
         'aide', 'part_aide',
@@ -21,10 +21,12 @@ class AccouchementAdmin(admin.ModelAdmin):
         'part_aide',
         'part_pediatre',
     )
+    list_filter = ('mois','annee')
+
 
 class CesarienneAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'montantTT', 'maison',
+        'libelle', 'montantTT','mois','annee', 'maison',
         'chirurgien', 'part_chirurgien',
         'anesthesiste', 'part_anesthesiste',
         'aide', 'part_aide',
@@ -43,11 +45,11 @@ class CesarienneAdmin(admin.ModelAdmin):
         'part_pediatre',
         'part_sage_femme',
     )
-
+    list_filter = ('mois','annee')
 
 class CureHernieAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'montantTT', 'maison',
+        'libelle', 'montantTT', 'mois','annee', 'maison',
         'chirurgien', 'part_chirurgien',
         'aide', 'part_aide',
         'panseur', 'part_panseur',
@@ -58,11 +60,11 @@ class CureHernieAdmin(admin.ModelAdmin):
         'part_aide',
         'part_panseur',
     )
-
+    list_filter = ('mois','annee')
 
 class HVVAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'montant_total', 'msn_montant',
+        'libelle', 'montant_total','mois', 'annee', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
         'anesthesiste_nom', 'anesthesiste_montant',
         'aide_nom', 'aide_montant',
@@ -70,13 +72,13 @@ class HVVAdmin(admin.ModelAdmin):
         'panseur_nom', 'panseur_montant',
         'created_at',
     )
-    list_filter = ('created_at',)
+    list_filter = ('created_at','mois','annee')
 
 
 
 class ActeMedicalAdmin(admin.ModelAdmin):
     list_display = (
-        'type_acte', 'libelle', 'montant_total', 'msn_montant',
+        'type_acte', 'libelle','mois','annee', 'montant_total', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
         'anesthesiste_nom', 'anesthesiste_montant',
         'aide_nom', 'aide_montant',
@@ -84,7 +86,7 @@ class ActeMedicalAdmin(admin.ModelAdmin):
         'panseur_nom', 'panseur_montant',
         'created_at',
     )
-    list_filter = ('type_acte', 'created_at')
+    list_filter = ('type_acte','mois','annee', 'created_at')
 
 
 
