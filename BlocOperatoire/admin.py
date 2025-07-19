@@ -92,7 +92,7 @@ class ActeMedicalAdmin(admin.ModelAdmin):
 
 class ActeMedicalSimpleAdmin(admin.ModelAdmin):
     list_display = (
-        'type_acte', 'libelle', 'montant_total', 'msn_montant',
+        'type_acte','mois','annee', 'libelle', 'montant_total', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
         'aide_nom', 'aide_montant',
         'panseur_nom', 'panseur_montant',
@@ -105,7 +105,7 @@ class ActeMedicalSimpleAdmin(admin.ModelAdmin):
 
 class ActeMedicalIntermediaireAdmin(admin.ModelAdmin):
     list_display = (
-        'type_acte', 'libelle', 'montant_total', 'msn_montant',
+        'type_acte','mois','annee', 'libelle', 'montant_total', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
         'instrumentiste_nom', 'instrumentiste_montant',
         'panseur_nom', 'panseur_montant',
@@ -117,13 +117,13 @@ class ActeMedicalIntermediaireAdmin(admin.ModelAdmin):
 
 
 class PaiementIVA_IVLAdmin(admin.ModelAdmin):
-    list_display = ('libelle', 'montant_total', 'msn_montant', 'acteur_nom', 'acteur_montant', 'aide_nom', 'aide_montant', 'created_at')
+    list_display = ('libelle','mois','annee', 'montant_total', 'msn_montant', 'acteur_nom', 'acteur_montant', 'aide_nom', 'aide_montant', 'created_at')
     list_filter = ('created_at',)
 
 
 class ActeTechniqueAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'type', 'montant_total',
+        'libelle','mois','annee', 'type', 'montant_total',
         'msn_montant', 'acteur_nom', 'acteur_montant',
         'aide_nom', 'aide_montant', 'created_at',
     )
@@ -138,7 +138,7 @@ class ActeTechniqueAdmin(admin.ModelAdmin):
 @admin.register(Varicocele)
 class VaricoceleAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'montantTT', 'maison',
+        'libelle','mois','annee', 'montantTT', 'maison',
         'chirurgien', 'chirurgien_part',
         'aide', 'aide_part',
         'panseur', 'panseur_part',
