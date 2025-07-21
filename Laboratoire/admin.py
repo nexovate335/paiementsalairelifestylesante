@@ -3,7 +3,7 @@ from .models import LaboTrios, LaboratoireMaison
 
 class LaboTriosAdmin(admin.ModelAdmin):
     list_display = (
-        'libelle', 'tarif_maison', 'tarif_trios', 'benefice_maison',
+        'libelle','mois','annee', 'tarif_maison', 'tarif_trios', 'benefice_maison',
         'msn_part_tarif_trios', 'total_g', 'msn_final', 'acteurs_total',
         'preleveur_nom', 'preleveur_montant', 'prescripteur_nom', 'prescripteur_montant'
     )
@@ -13,12 +13,12 @@ class LaboTriosAdmin(admin.ModelAdmin):
     )
     
 
-from django.contrib import admin
-from .models import LaboratoireMaison
 
 class LaboratoireMaisonAdmin(admin.ModelAdmin):
     list_display = (
         'libelle',
+        'mois',
+        'annee',
         'montant_total',
         'msn_part',
         'acteurs_part',
@@ -28,7 +28,6 @@ class LaboratoireMaisonAdmin(admin.ModelAdmin):
         'preleveur_nom', 'preleveur_gain',
         'assistante_nom', 'assistante_gain',
 
-        'mois', 'annee',
     )
 
     list_filter = ('mois', 'annee')

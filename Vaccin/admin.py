@@ -4,6 +4,8 @@ from .models import Vaccin
 class VaccinAdmin(admin.ModelAdmin):
     list_display = (
         'libelle',
+        'mois',
+        'annee',
         'montantTT',
         'maison',
         'nom_acteur1', 'acteur1_part',
