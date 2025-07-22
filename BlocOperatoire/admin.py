@@ -89,7 +89,6 @@ class ActeMedicalAdmin(admin.ModelAdmin):
     list_filter = ('type_acte','mois','annee', 'created_at')
 
 
-
 class ActeMedicalSimpleAdmin(admin.ModelAdmin):
     list_display = (
         'type_acte','mois','annee', 'libelle', 'montant_total', 'msn_montant',

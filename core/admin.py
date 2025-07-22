@@ -75,8 +75,8 @@ from Consultation.admin import ConsultationAdmin, CertificatMedicalAdmin
 from Consultation.models import Consultation, CertificatMedical
 
 # Échographie
-from Echographie.admin import ActeMedicalAdmin as ActeMedicalSimpleAdmin, PaiementMonitorageAdmin
-from Echographie.models import ActeMedical as ActeMedicalSimple, PaiementMonitorage
+from Echographie.admin import ActeMedicalAdmin as ActeMedicalAdmin, PaiementMonitorageAdmin
+from Echographie.models import ActeMedical as ActeMedical, PaiementMonitorage
 
 # Hospitalisation
 from Hospitalisation.admin import PaiementHospitalisationAdmin
