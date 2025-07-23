@@ -805,13 +805,6 @@ class ActeMedicalOperatoireAdmin(BaseAdmin):
         return response
 
 
-
-from django.contrib import admin, messages
-from django.db.models import Sum
-from django.utils.html import format_html
-from .models import ActeMedicalSimple
-
-
 # Filtres dynamiques personnalisés
 class MoisFilter(admin.SimpleListFilter):
     title = 'Mois'
