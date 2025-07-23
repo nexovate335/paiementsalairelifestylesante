@@ -5,9 +5,6 @@ from django.utils import formats
 from datetime import datetime
 from datetime import date
 from .models import ChargeObligatoire
-from .services import TraitementChargeObligatoire, format_mois_annee  # ajuster selon ton projet
-
-
 from .models import ChargeObligatoire, MontantTotal, TraitementChargeObligatoire
 
 
