@@ -35,7 +35,7 @@ class FicheDePaie(models.Model):
     # Prestations
     chirurgie = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     aide = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    consultations = models.IntegerField(null=True, blank=True)
+    consultations = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     prime_laboratoire = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     bonus_prescription_pharmacie = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
 
@@ -47,6 +47,7 @@ class FicheDePaie(models.Model):
         champs = [
             self.chirurgie,
             self.aide,
+            self.consultations,
             self.prime_laboratoire,
             self.bonus_prescription_pharmacie,
         ]

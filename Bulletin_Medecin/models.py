@@ -34,7 +34,7 @@ class FichePrestation(models.Model):
     accouchements = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     chirurgie =models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     aides =models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-    prescription_labo = models.IntegerField(blank=True, null=True)
+    prescription_labo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     bonus_pharmacie = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
 
     prime_transport = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
