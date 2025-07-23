@@ -593,7 +593,7 @@ class PanseurFilter(admin.SimpleListFilter):
 
 # Admin personnalisé
 @admin.register(HVV)
-class HVVAdmin(admin.ModelAdmin):
+class HVVAdmin(BaseAdmin):
     list_display = (
         'libelle', 'montant_total', 'mois', 'annee', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
@@ -745,7 +745,7 @@ class PanseurFilter(admin.SimpleListFilter):
 
 # Admin personnalisé
 @admin.register(ActeMedicalOperatoire)
-class ActeMedicalOperatoireAdmin(admin.ModelAdmin):
+class ActeMedicalOperatoireAdmin(BaseAdmin):
     list_display = (
         'type_acte', 'libelle', 'mois', 'annee', 'montant_total', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
@@ -871,7 +871,7 @@ class PanseurFilter(admin.SimpleListFilter):
 
 # Admin amélioré
 @admin.register(ActeMedicalSimple)
-class ActeMedicalSimpleAdmin(admin.ModelAdmin):
+class ActeMedicalSimpleAdmin(BaseAdmin):
     list_display = (
         'type_acte', 'mois', 'annee', 'libelle', 'montant_total', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
@@ -921,13 +921,6 @@ class ActeMedicalSimpleAdmin(admin.ModelAdmin):
                     level=messages.INFO
                 )
         return response
-
-
-
-from django.contrib import admin, messages
-from django.db.models import Sum
-from django.utils.html import format_html
-from .models import ActeMedicalIntermediaire
 
 
 # Filtres personnalisés
@@ -1000,7 +993,7 @@ class AideFilter(admin.SimpleListFilter):
 
 # Admin avec totaux
 @admin.register(ActeMedicalIntermediaire)
-class ActeMedicalIntermediaireAdmin(admin.ModelAdmin):
+class ActeMedicalIntermediaireAdmin(BaseAdmin):
     list_display = (
         'type_acte', 'mois', 'annee', 'libelle', 'montant_total', 'msn_montant',
         'chirurgien_nom', 'chirurgien_montant',
@@ -1055,13 +1048,6 @@ class ActeMedicalIntermediaireAdmin(admin.ModelAdmin):
         return response
 
 
-
-from django.contrib import admin, messages
-from django.db.models import Sum
-from django.utils.html import format_html
-from .models import PaiementIVA_IVL
-
-
 # Filtres personnalisés
 class MoisFilter(admin.SimpleListFilter):
     title = 'Mois'
@@ -1110,7 +1096,7 @@ class AideFilter(admin.SimpleListFilter):
 
 # Admin
 @admin.register(PaiementIVA_IVL)
-class PaiementIVA_IVLAdmin(admin.ModelAdmin):
+class PaiementIVA_IVLAdmin(BaseAdmin):
     list_display = (
         'libelle', 'mois', 'annee', 'montant_total', 'msn_montant',
         'acteur_nom', 'acteur_montant',
@@ -1152,11 +1138,6 @@ class PaiementIVA_IVLAdmin(admin.ModelAdmin):
                     level=messages.INFO
                 )
         return response
-
-from django.contrib import admin, messages
-from django.db.models import Sum
-from django.utils.html import format_html
-from .models import ActeTechnique
 
 
 # Filtres personnalisés
@@ -1257,12 +1238,6 @@ class ActeTechniqueAdmin(admin.ModelAdmin):
         return response
 
 
-from django.contrib import admin, messages
-from django.db.models import Sum
-from django.utils.html import format_html
-from .models import Varicocele
-
-
 # Filtres personnalisés
 class MoisFilter(admin.SimpleListFilter):
     title = 'Mois'
@@ -1322,7 +1297,7 @@ class PanseurFilter(admin.SimpleListFilter):
 
 # Admin
 @admin.register(Varicocele)
-class VaricoceleAdmin(admin.ModelAdmin):
+class VaricoceleAdmin(BaseAdmin):
     list_display = (
         'libelle', 'mois', 'annee', 'montantTT', 'maison',
         'chirurgien', 'chirurgien_part',
