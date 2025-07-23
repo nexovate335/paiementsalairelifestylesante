@@ -3,6 +3,10 @@ from django.db.models import Sum
 from datetime import date
 from django.utils import formats
 from datetime import datetime
+from datetime import date
+from .models import ChargeObligatoire
+from .services import TraitementChargeObligatoire, format_mois_annee  # ajuster selon ton projet
+
 
 from .models import ChargeObligatoire, MontantTotal, TraitementChargeObligatoire
 
@@ -12,6 +16,7 @@ def format_mois_annee(mois, annee):
     return formats.date_format(dt, "F Y")
 
 
+@admin.register(ChargeObligatoire)
 class ChargeObligatoireAdmin(admin.ModelAdmin):
     list_display = ('libelle', 'depense', 'mois_formate')
     list_filter = ('mois', 'annee', 'libelle')
@@ -20,9 +25,15 @@ class ChargeObligatoireAdmin(admin.ModelAdmin):
     def changelist_view(self, request, extra_context=None):
         response = super().changelist_view(request, extra_context=extra_context)
         try:
+            cl = response.context_data.get('cl')
+            if cl:
+                qs = cl.queryset
+                total_filtre = qs.aggregate(total=Sum('depense'))['total'] or 0
+                messages.info(request, f"💰 Total des dépenses filtrées : {total_filtre} FCFA")
+
+            # Affichage complémentaire (non filtré) si besoin
             total_mensuel = TraitementChargeObligatoire.total_mois_actuel()
-            today = date.today()
-            mois_actuel = format_mois_annee(today.month, today.year)
+            mois_actuel = format_mois_annee(date.today().month, date.today().year)
             reste = TraitementChargeObligatoire.calculer_reste()
 
             response.context_data['total_mensuel'] = total_mensuel
@@ -36,19 +47,13 @@ class ChargeObligatoireAdmin(admin.ModelAdmin):
 
     def afficher_total_mensuel(self, request, queryset):
         total = TraitementChargeObligatoire.total_mois_actuel()
-        today = date.today()
-        mois_actuel = format_mois_annee(today.month, today.year)
-        messages.info(
-            request,
-            f"Total des dépenses pour {mois_actuel} : {total} FCFA"
-        )
-
+        mois_actuel = format_mois_annee(date.today().month, date.today().year)
+        messages.info(request, f"📅 Total des dépenses pour {mois_actuel} : {total} FCFA")
     afficher_total_mensuel.short_description = "Afficher total du mois actuel"
 
     def afficher_total_general(self, request, queryset):
         total = TraitementChargeObligatoire.depense_totale()
-        messages.success(request, f"Total général des dépenses : {total} FCFA")
-
+        messages.success(request, f"📊 Total général des dépenses : {total} FCFA")
     afficher_total_general.short_description = "Afficher total général"
 
 
