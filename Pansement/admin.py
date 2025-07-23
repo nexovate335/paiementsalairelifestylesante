@@ -117,7 +117,7 @@ class BaseAdmin(admin.ModelAdmin):
 
 class ActeurFilter(admin.SimpleListFilter):
     title = 'Acteur'
-    parameter_name = 'acteur_nom'
+    parameter_name = 'acteur'
 
     def lookups(self, request, model_admin):
         acteurs = model_admin.model.objects.values_list('acteur', flat=True).distinct()
@@ -125,8 +125,9 @@ class ActeurFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(acteur_nom=self.value())
+            return queryset.filter(acteur=self.value())
         return queryset
+
 
 
 class MoisFilter(admin.SimpleListFilter):
