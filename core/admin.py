@@ -53,12 +53,12 @@ from Bulletin_SF.models import PrestationMensuelle as PM
 # Bloc opératoire
 from BlocOperatoire.admin import (
     AccouchementAdmin, CesarienneAdmin, CureHernieAdmin, HVVAdmin,
-    ActeMedicalAdmin, ActeMedicalSimpleAdmin, ActeMedicalIntermediaireAdmin,
+    ActeMedicalOperatoireAdmin, ActeMedicalSimpleAdmin, ActeMedicalIntermediaireAdmin,
     PaiementIVA_IVLAdmin, ActeTechniqueAdmin,VaricoceleAdmin
 )
 from BlocOperatoire.models import (
     Accouchement, Cesarienne, CureHernie, HVV,
-    ActeMedical, ActeMedicalSimple, ActeMedicalIntermediaire,
+    ActeMedicalOperatoire, ActeMedicalSimple, ActeMedicalIntermediaire,
     PaiementIVA_IVL, ActeTechnique,Varicocele
 )
 
@@ -134,7 +134,7 @@ for model, admin_class in [
     (Cesarienne, CesarienneAdmin),
     (CureHernie, CureHernieAdmin),
     (HVV, HVVAdmin),
-    (ActeMedical, ActeMedicalAdmin),
+    (ActeMedicalOperatoire, ActeMedicalOperatoireAdmin),
     (ActeMedicalSimple, ActeMedicalSimpleAdmin),
     (ActeMedicalIntermediaire, ActeMedicalIntermediaireAdmin),
     (PaiementIVA_IVL, PaiementIVA_IVLAdmin),

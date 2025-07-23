@@ -206,7 +206,7 @@ class HVV(models.Model):
             f"{self.panseur_nom}: {self.panseur_montant} FCFA"
         )
 
-class ActeMedical(models.Model):
+class ActeMedicalOperatoire(models.Model):
     TYPE_ACTES = [
         ("Myomectomie", "Myomectomie"),
         ("HVH", "HVH"),
