@@ -157,6 +157,7 @@ for model, admin_class in [
     (CertificatMedical, CertificatMedicalAdmin),
 
     # Échographie
+    (ActeMedical,ActeMedicalAdmin),
     (PaiementMonitorage, PaiementMonitorageAdmin),
 
     # Hospitalisation
