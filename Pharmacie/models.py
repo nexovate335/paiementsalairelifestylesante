@@ -44,11 +44,11 @@ class Pharmacie(models.Model):
 
     @property
     def vendeur(self):
-        return (self.benefice * Decimal('0.10')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        return (self.benefice * Decimal('0.12')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
     @property
     def prescripteur(self):
-        return (self.benefice * Decimal('0.06')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        return (self.benefice * Decimal('0.04')).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
     def __str__(self):
         return f"{self.libelle} - {self.prix_vente} FCFA"
