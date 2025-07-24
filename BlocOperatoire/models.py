@@ -445,11 +445,11 @@ class Varicocele(models.Model):
 
     @property
     def chirurgien_part(self):
-        return round(self.montant_acteurs * Decimal('0.80'), 2)
+        return round(self.montant_acteurs * Decimal('0.85'), 2)
 
     @property
     def aide_part(self):
-        return round(self.montant_acteurs * Decimal('0.15'), 2)
+        return round(self.montant_acteurs * Decimal('0.10'), 2)
 
     @property
     def panseur_part(self):
