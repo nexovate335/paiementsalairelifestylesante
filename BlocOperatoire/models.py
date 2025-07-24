@@ -58,19 +58,19 @@ class Accouchement(BlocOperatoire):
 
     @property
     def part_medecin(self):
-        return round(self.total_acteurs * Decimal('0.4286'), 2)
+        return round(self.total_acteurs * Decimal('0.15'), 2)
 
     @property
     def part_sage_femme(self):
-        return round(self.total_acteurs * Decimal('0.2857'), 2)
+        return round(self.total_acteurs * Decimal('0.10'), 2)
 
     @property
     def part_aide(self):
-        return round(self.total_acteurs * Decimal('0.1429'), 2)
+        return round(self.total_acteurs * Decimal('0.05'), 2)
 
     @property
     def part_pediatre(self):
-        return round(self.total_acteurs * Decimal('0.1429'), 2)
+        return round(self.total_acteurs * Decimal('0.05'), 2)
 
 
 # === Classe spécifique pour Césarienne ===
