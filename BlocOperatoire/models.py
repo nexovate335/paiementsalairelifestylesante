@@ -41,6 +41,30 @@ class BlocOperatoire(models.Model):
             return Decimal('0.00')
         # Par défaut 35%, peut être redéfini dans les sous-classes
         return round(self.montantTT * Decimal('0.35'), 2)
+        
+
+class BlocOperatoireCesarienne(models.Model):
+    libelle = models.CharField(max_length=255)
+    montantTT = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    mois = models.CharField(max_length=10, choices=MOIS_CHOICES, null=True, blank=True)
+    annee = models.CharField(max_length=4, choices=ANNEE_CHOICES, default='2025', null=True, blank=True)
+
+    class Meta:
+        abstract = True  # Classe de base abstraite, pas de table DB ici
+
+    @property
+    def maison(self):
+        if not self.montantTT:
+            return Decimal('0.00')
+        # Par défaut on considère 70%, peut être redéfini dans les sous-classes
+        return round(self.montantTT * Decimal('0.70'), 2)
+
+    @property
+    def total_acteurs(self):
+        if not self.montantTT:
+            return Decimal('0.00')
+        # Par défaut 30%, peut être redéfini dans les sous-classes
+        return round(self.montantTT * Decimal('0.30'), 2)
 
 
 # === Classe spécifique pour Accouchement ===
@@ -74,7 +98,7 @@ class Accouchement(BlocOperatoire):
 
 
 # === Classe spécifique pour Césarienne ===
-class Cesarienne(BlocOperatoire):
+class Cesarienne(BlocOperatoireCesarienne):
     chirurgien = models.CharField("Chirurgien", max_length=255, null=True, blank=True)
     anesthesiste = models.CharField("Anesthésiste", max_length=255, null=True, blank=True)
     panseur = models.CharField("Panseur", max_length=255, null=True, blank=True)
